@@ -13,6 +13,11 @@ android:
     - tools
     - android-$ANDROID_API_LEVEL
     - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+    # Additional components
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - addon-google_apis-google-26
   licenses:
       - 'android-sdk-preview-license-.+'
       - 'android-sdk-license-.+'

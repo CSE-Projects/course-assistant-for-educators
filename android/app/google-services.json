@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "481160922401",
+    "firebase_url": "https://course-assistant-for-edu-e7437.firebaseio.com",
+    "project_id": "course-assistant-for-edu-e7437",
+    "storage_bucket": "course-assistant-for-edu-e7437.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:481160922401:android:fdd43358e58e3645",
+        "android_client_info": {
+          "package_name": "com.example.omkar.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "481160922401-grtabf9jc3mkknnvdd1k9vsi10r39bk7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWfwDioSw74kqrKExbUxeuiJzCkh9eiJo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
