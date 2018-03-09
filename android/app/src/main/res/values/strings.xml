@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">android</string>
+    <string name="title_activity_courses">CoursesActivity</string>
 </resources>
