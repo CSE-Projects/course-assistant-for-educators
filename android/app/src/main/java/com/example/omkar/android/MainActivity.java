@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -123,7 +124,8 @@ public class MainActivity extends AppCompatActivity {
     private void onSignedIn() {
         Toast.makeText(MainActivity.this, "Signed in!", Toast.LENGTH_SHORT).show();
         Intent launchCoursesActivity = new Intent(MainActivity.this, CoursesActivity.class);
-        finish();
         startActivity(launchCoursesActivity);
+        Log.d("Activity", "Finished");
+        finish();
     }
 }
