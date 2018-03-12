@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/ic_home"
+            android:title="Home" />
+        <item
+            android:id="@+id/similarity_check"
+            android:icon="@drawable/ic_document"
+            android:title="Similarity check" />
+        <item
+            android:id="@+id/request_backup"
+            android:icon="@drawable/ic_backup"
+            android:title="Request backup" />
+        <item
+            android:id="@+id/contact_us"
+            android:icon="@drawable/ic_contact_us"
+            android:title="Contact us" />
+        <item
+            android:id="@+id/help_feedback"
+            android:icon="@drawable/ic_feedback"
+            android:title="Help and feedback" />
+
+    </group>
+</menu>
