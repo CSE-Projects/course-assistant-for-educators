@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!ERROR_PAGE_DISPLAYED) {
                     // check internet connection layout
                     setContentView(R.layout.activity_main);
-                    getSupportActionBar().hide();
+                    //getSupportActionBar().hide();
                     // set listener on button to call checkAuth
                     final Button checkStatus = findViewById(R.id.checkStatus);
                     checkStatus.setOnClickListener(new View.OnClickListener() {
