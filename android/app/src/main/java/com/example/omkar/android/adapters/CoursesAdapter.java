@@ -17,9 +17,9 @@ import java.util.ArrayList;
  * Created by omkar on 14-Mar-18.
  */
 
-public class CoursesAdapter extends ArrayAdapter<String> {
+public class CoursesAdapter extends ArrayAdapter<String[]> {
 
-    public CoursesAdapter(Activity context, ArrayList<String> courseCodeList) {
+    public CoursesAdapter(Activity context, ArrayList<String[]> courseCodeList) {
         super(context, 0, courseCodeList);
     }
 
@@ -35,13 +35,14 @@ public class CoursesAdapter extends ArrayAdapter<String> {
         }
 
         // getting item from array list
-        String courseCode = getItem(position);
+        String[] courseInfo = getItem(position);
 
-        // get view from item_course to display course code
-        TextView courseCodeText = (TextView) view.findViewById(R.id.courseCodeText);
+        // get view from item_course to display course code and name
+        TextView courseCodeText = view.findViewById(R.id.courseCodeText);
+        TextView courseNameText = view.findViewById(R.id.courseNameText);
         // set text of view
-        courseCodeText.setText(courseCode);
-
+        courseCodeText.setText(courseInfo[0]);
+        courseNameText.setText(courseInfo[1]);
         // return item
         return view;
     }

@@ -20,6 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String STUDENT_TABLE_NAME = "students";
 
     public static final String COURSE_COLUMN_COURSE_CODE = "courseCode";
+    public static final String COURSE_COLUMN_COURSE_NAME = "courseName";
     public static final String COURSE_COLUMN_STUDENT_COUNT = "studentCount";
     public static final String COURSE_COLUMN_DAY_COUNT = "dayCount";
     public static final String COURSE_COLUMN_CR_EMAIL = "emailCR";
@@ -42,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // create two tables
         db.execSQL(
                 "create table courses " +
-                        "(courseCode STRING primary key, studentCount INTEGER, dayCount INTEGER, emailCr STRING, emailTa STRING)"
+                        "(courseCode STRING primary key, courseName STRING, studentCount INTEGER, dayCount INTEGER, emailCr STRING, emailTa STRING)"
         );
 
         db.execSQL(
@@ -67,6 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("courseCode", course.getCourseCode());
+        contentValues.put("courseName", course.getCourseName());
         contentValues.put("studentCount", course.getStudentCount());
         contentValues.put("dayCount", course.getDayCount());
         contentValues.put("emailCr", course.getEmailCr());
@@ -80,8 +82,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * Get course code column from course table
      * @return course code column
      */
-    public Cursor getCourseCodes() {
+    public Cursor getCourseInfo() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery( "select courseCode from courses", null );
+        return db.rawQuery( "select courseCode,courseName from courses", null );
     }
 }

@@ -12,8 +12,8 @@ public class CourseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_course);
 
         // Intent bundle for getting extra info
-        Bundle play = getIntent().getExtras();
-        String courseCode = play.getString("courseCode");
+        Bundle courseInfo = getIntent().getExtras();
+        String courseCode = courseInfo.getString("courseCode");
         Log.d("Course Code", courseCode);
 
     }

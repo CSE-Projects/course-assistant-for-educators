@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Course {
 
     // members variables
+    private String mCourseName;
     private String mCourseCode;
     private int mStudentCount;
     private String mEmailCr = "";
@@ -25,7 +26,8 @@ public class Course {
      * @param courseCode course code
      * @param studentCount number of students for the course
      */
-    public Course(String courseCode, int studentCount, String emailCr, String emailTa) {
+    public Course(String courseName, String courseCode, int studentCount, String emailCr, String emailTa) {
+        mCourseName = courseName;
         mCourseCode = courseCode;
         mStudentCount = studentCount;
         mEmailCr = emailCr;
@@ -35,6 +37,11 @@ public class Course {
 
 
     // getters for variables required on object instantiation
+
+    public String getCourseName() {
+        return mCourseName;
+    }
+
     public String getCourseCode() {
         return mCourseCode;
     }
@@ -43,18 +50,9 @@ public class Course {
         return mStudentCount;
     }
 
-    // setters and getters for member variables
-//    public void setEmailCr(String emailCr) {
-//        mCourseCode = emailCr;
-//    }
-
     public String getEmailCr() {
         return mEmailCr;
     }
-
-//    public void setEmailTa(String emailTa) {
-//        mCourseCode = emailTa;
-//    }
 
     public String getEmailTa() {
         return mEmailTa;

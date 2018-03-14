@@ -13,5 +13,5 @@ public interface CoursesViewInterface {
     public void setDrawerLocked(boolean shouldLock);
     public void setFabHidden(boolean enabled);
     public void insertNewCourse(Course course);
-    public void setViewHidden(boolean enabled);
+    public void setViewHidden(boolean enabled, int color);
 }

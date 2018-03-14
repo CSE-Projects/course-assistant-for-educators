@@ -23,6 +23,7 @@ public class AddCourseFragment extends Fragment {
 
     // view of fragment
     View view;
+    private EditText mCourseNameEditText;
     private EditText mCourseCodeEditText;
     private EditText mStudentCountEditText;
     private EditText mEmailCrEditText;
@@ -36,7 +37,7 @@ public class AddCourseFragment extends Fragment {
         setHasOptionsMenu(true);
         ((CoursesActivity)getActivity()).setDrawerLocked(true);
         ((CoursesActivity)getActivity()).initToolbar("Course Details", R.drawable.ic_arrow_back);
-        ((CoursesActivity)getActivity()).setViewHidden(true);
+        ((CoursesActivity)getActivity()).setViewHidden(true, R.color.white);
     }
 
 
@@ -58,6 +59,7 @@ public class AddCourseFragment extends Fragment {
      */
     private void saveCourse() {
         // get value from input fields
+        mCourseNameEditText = view.findViewById(R.id.courseNameEdit);
         mCourseCodeEditText = view.findViewById(R.id.courseCodeEdit);
         mStudentCountEditText = view.findViewById(R.id.studentCountEdit);
         mEmailCrEditText = view.findViewById(R.id.emailCrEdit);
@@ -66,7 +68,7 @@ public class AddCourseFragment extends Fragment {
         // TODO: Add validation code for inputs
 
         // create Course object
-        mCourse = new Course(mCourseCodeEditText.getText().toString(), Integer.parseInt(mStudentCountEditText.getText().toString()), mEmailCrEditText.getText().toString(), mEmailTaEditText.getText().toString());
+        mCourse = new Course(mCourseNameEditText.getText().toString(), mCourseCodeEditText.getText().toString(), Integer.parseInt(mStudentCountEditText.getText().toString()), mEmailCrEditText.getText().toString(), mEmailTaEditText.getText().toString());
         // save object in Courses Activity
         ((CoursesActivity)getActivity()).insertNewCourse(mCourse);
     }
@@ -113,7 +115,7 @@ public class AddCourseFragment extends Fragment {
         ((CoursesActivity)getActivity()).setDrawerLocked(false);
         ((CoursesActivity)getActivity()).initToolbar("Courses", R.drawable.ic_menu);
         ((CoursesActivity)getActivity()).setFabHidden(false);
-        ((CoursesActivity)getActivity()).setViewHidden(false);
+        ((CoursesActivity)getActivity()).setViewHidden(false, R.color.background);
     }
 }
 

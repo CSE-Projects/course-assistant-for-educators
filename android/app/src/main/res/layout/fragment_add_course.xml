@@ -6,7 +6,36 @@
     android:orientation="vertical"
     android:layout_marginStart="16dp"
     android:layout_marginTop="64dp"
+    android:background="#ffffff"
     tools:context="com.example.omkar.android.fragments.AddCourseFragment">
+
+    <!-- Course Code -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_course" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/courseNameEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="16dp"
+                android:hint="Course"
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
 
     <!-- Course Code -->
     <LinearLayout

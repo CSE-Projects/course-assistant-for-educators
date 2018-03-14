@@ -16,19 +16,36 @@
         android:layout_marginEnd="8dp"
         app:cardCornerRadius="4dp">
 
-        <!-- Course Code -->
-        <TextView
-            android:id="@+id/courseCodeText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_marginTop="24dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:padding="18dp"
-            android:textStyle="bold"
-            />
+            android:orientation="vertical">
+
+            <!-- Course Name -->
+            <TextView
+                android:id="@+id/courseNameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:layout_marginTop="22dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:textStyle="bold"
+                />
+            <!-- Course Code -->
+            <TextView
+                android:id="@+id/courseCodeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                />
+
+        </LinearLayout>
+
     </android.support.v7.widget.CardView>
 
 </FrameLayout>

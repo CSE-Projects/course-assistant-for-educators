@@ -38,7 +38,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
     private DatabaseHelper mDbHelper;
     private RecyclerView mRecyclerView;
 
-    private ArrayList<String> mCourseCodeList;
+    private ArrayList<String[]> mCourseCodeList;
     private CoursesAdapter mCoursesAdapter;
     private ListView mListView;
 
@@ -69,13 +69,13 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
 
         // get course column from db
         mDbHelper = new DatabaseHelper(this);
-        Cursor c = mDbHelper.getCourseCodes();
+        Cursor c = mDbHelper.getCourseInfo();
 
         // iterate through column elements
         if (c.moveToFirst()){
             do {
                 // add to list
-                mCourseCodeList.add(c.getString(0));
+                mCourseCodeList.add(new String[]{c.getString(0), c.getString(1)});
             } while(c.moveToNext());
         }
         c.close();
@@ -92,10 +92,10 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
                 // set intent to Course Activity
                 Intent courseIntent = new Intent(CoursesActivity.this, CourseActivity.class);
                 // get course code of item clicked
-                String courseCode = mCourseCodeList.get(position);
+                String[] courseInfo = mCourseCodeList.get(position);
 
                 // send course with intent
-                courseIntent.putExtra("courseCode", courseCode);
+                courseIntent.putExtra("courseCode", courseInfo[0]);
                 startActivity(courseIntent);
             }
         });
@@ -107,8 +107,8 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
      * @param course passed from fragment
      */
     public void insertNewCourse(Course course) {
-        // add course code to the list
-        mCourseCodeList.add(course.getCourseCode());
+        // add course code and name to the list
+        mCourseCodeList.add(new String[]{course.getCourseCode(), course.getCourseName()});
 //        for (String member : mCourseCodeList){
 //            Log.i("Member name: ", member);
 //        }
@@ -249,9 +249,9 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
     }
 
     @Override
-    public void setViewHidden(boolean enabled) {
+    public void setViewHidden(boolean enabled, int color) {
         ListView l = findViewById(R.id.courses_list_view);
-
+        mDrawerLayout.setBackgroundColor(getResources().getColor(color));
         if (enabled) {
             l.setVisibility(View.GONE);
         }
@@ -259,5 +259,4 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
             l.setVisibility(View.VISIBLE);
         }
     }
-
 }
