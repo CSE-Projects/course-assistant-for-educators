@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
      * Start Courses Activity on Sign In
      */
     private void onSignedIn() {
-        Toast.makeText(MainActivity.this, "Signed in!", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this, "Signed in!", Toast.LENGTH_SHORT).show();
         Intent launchCoursesActivity = new Intent(MainActivity.this, CoursesActivity.class);
         startActivity(launchCoursesActivity);
         Log.d("Activity", "Finished");

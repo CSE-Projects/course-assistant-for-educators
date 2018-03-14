@@ -19,15 +19,20 @@ public class Course {
     private ArrayList<Student> mStudentList;
     private ArrayList<ProjectDeadline> mProjectDeadlineList;
 
+
     /**
      * Constructor to Initialize params
      * @param courseCode course code
      * @param studentCount number of students for the course
      */
-    public Course(String courseCode, int studentCount) {
+    public Course(String courseCode, int studentCount, String emailCr, String emailTa) {
         mCourseCode = courseCode;
         mStudentCount = studentCount;
+        mEmailCr = emailCr;
+        mEmailTa = emailTa;
+        mDayCount = 0;
     }
+
 
     // getters for variables required on object instantiation
     public String getCourseCode() {
@@ -39,17 +44,17 @@ public class Course {
     }
 
     // setters and getters for member variables
-    public void setEmailCr(String emailCr) {
-        mCourseCode = emailCr;
-    }
+//    public void setEmailCr(String emailCr) {
+//        mCourseCode = emailCr;
+//    }
 
     public String getEmailCr() {
         return mEmailCr;
     }
 
-    public void setEmailTa(String emailTa) {
-        mCourseCode = emailTa;
-    }
+//    public void setEmailTa(String emailTa) {
+//        mCourseCode = emailTa;
+//    }
 
     public String getEmailTa() {
         return mEmailTa;
