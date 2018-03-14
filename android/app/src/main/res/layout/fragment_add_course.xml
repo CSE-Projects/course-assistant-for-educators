@@ -26,7 +26,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/courseCode"
+                android:id="@+id/courseCodeEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/studentCount"
+                android:id="@+id/studentCountEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/emailCr"
+                android:id="@+id/emailCrEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
@@ -110,7 +110,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/emailTa"
+                android:id="@+id/emailTaEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"

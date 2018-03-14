@@ -58,10 +58,10 @@ public class AddCourseFragment extends Fragment {
      */
     private void saveCourse() {
         // get value from input fields
-        mCourseCodeEditText = view.findViewById(R.id.courseCode);
-        mStudentCountEditText = view.findViewById(R.id.studentCount);
-        mEmailCrEditText = view.findViewById(R.id.emailCr);
-        mEmailTaEditText = view.findViewById(R.id.emailTa);
+        mCourseCodeEditText = view.findViewById(R.id.courseCodeEdit);
+        mStudentCountEditText = view.findViewById(R.id.studentCountEdit);
+        mEmailCrEditText = view.findViewById(R.id.emailCrEdit);
+        mEmailTaEditText = view.findViewById(R.id.emailTaEdit);
 
         // TODO: Add validation code for inputs
 

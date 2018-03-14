@@ -3,6 +3,7 @@ package com.example.omkar.android;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,10 +17,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.omkar.android.adapters.CoursesAdapter;
 import com.example.omkar.android.fragments.AddCourseFragment;
 import com.example.omkar.android.helpers.DatabaseHelper;
 import com.example.omkar.android.interfaces.CoursesViewInterface;
@@ -37,7 +39,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
     private RecyclerView mRecyclerView;
 
     private ArrayList<String> mCourseCodeList;
-    private ArrayAdapter<String> mAdapter;
+    private CoursesAdapter mCoursesAdapter;
     private ListView mListView;
 
     @Override
@@ -62,36 +64,57 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
      * Display courses from db
      */
     private void displayCourses() {
-        // cource code list
+        // course code list
         mCourseCodeList = new ArrayList<>();
 
-        // get contents
+        // get course column from db
         mDbHelper = new DatabaseHelper(this);
         Cursor c = mDbHelper.getCourseCodes();
 
+        // iterate through column elements
         if (c.moveToFirst()){
             do {
+                // add to list
                 mCourseCodeList.add(c.getString(0));
-                // Do something Here with values
             } while(c.moveToNext());
         }
         c.close();
 
-        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, mCourseCodeList);
+        // set custom adapter and add to list view
+        mCoursesAdapter = new CoursesAdapter(this, mCourseCodeList);
         mListView = findViewById(R.id.courses_list_view);
-        mListView.setAdapter(mAdapter);
+        mListView.setAdapter(mCoursesAdapter);
+
+        // listener for click events on list view
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // set intent to Course Activity
+                Intent courseIntent = new Intent(CoursesActivity.this, CourseActivity.class);
+                // get course code of item clicked
+                String courseCode = mCourseCodeList.get(position);
+
+                // send course with intent
+                courseIntent.putExtra("courseCode", courseCode);
+                startActivity(courseIntent);
+            }
+        });
     }
+
 
     /**
      * Insert new course into database and list
      * @param course passed from fragment
      */
     public void insertNewCourse(Course course) {
+        // add course code to the list
         mCourseCodeList.add(course.getCourseCode());
 //        for (String member : mCourseCodeList){
 //            Log.i("Member name: ", member);
 //        }
-        mAdapter.notifyDataSetChanged();
+        // notify adapter that list has changed
+        mCoursesAdapter.notifyDataSetChanged();
+        // insert course in database
         mDbHelper.insertCourse(course);
 
         Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
@@ -236,4 +259,5 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
             l.setVisibility(View.VISIBLE);
         }
     }
+
 }
