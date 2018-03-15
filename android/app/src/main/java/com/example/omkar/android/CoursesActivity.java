@@ -70,7 +70,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
         mCourseCodeList = new ArrayList<>();
 
         // get course column from db
-        mDbHelper = new DatabaseHelper(this);
+        mDbHelper = DatabaseHelper.getInstance(this);
         Cursor c = mDbHelper.getCourseInfo();
 
         // iterate through column elements

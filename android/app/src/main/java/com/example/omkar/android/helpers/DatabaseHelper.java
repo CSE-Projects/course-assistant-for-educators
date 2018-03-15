@@ -14,6 +14,9 @@ import com.example.omkar.android.models.Course;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    // instance of database helper
+    private static DatabaseHelper sInstance;
+
     // identifiers
     public static final String DATABASE_NAME = "Course.db";
     public static final String COURSE_TABLE_NAME = "courses";
@@ -33,7 +36,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COURSE_COLUMN_DATES = "dates";
 
 
-    public DatabaseHelper(Context context) {
+    public static synchronized DatabaseHelper getInstance(Context context) {
+
+        // Use the application context, which will ensure that you
+        // don't accidentally leak an Activity's context.
+        if (sInstance == null) {
+            sInstance = new DatabaseHelper(context.getApplicationContext());
+        }
+        return sInstance;
+    }
+
+
+    /**
+     * Constructor should be private to prevent direct instantiation.
+     * make call to static method "getInstance()" instead.
+     */
+    private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME , null, 1);
     }
 
@@ -62,7 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Insert a Course attributes in course table
      * @param course course object
-     * @return
+     * @return true
      */
     public boolean insertCourse (Course course) {
         SQLiteDatabase db = this.getWritableDatabase();

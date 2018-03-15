@@ -19,8 +19,15 @@ import java.util.ArrayList;
 
 public class CoursesAdapter extends ArrayAdapter<String[]> {
 
+    // TODO: Add colors to course codes
+//    private int[] colors ;
+//    private int positionColors;
+
     public CoursesAdapter(Activity context, ArrayList<String[]> courseCodeList) {
         super(context, 0, courseCodeList);
+
+//        colors = new int[] {R.color.brown, R.color.pink, R.color.blue, R.color.green, R.color.orange, R.color.purple};
+//        positionColors = 0;
     }
 
     @NonNull
@@ -28,8 +35,7 @@ public class CoursesAdapter extends ArrayAdapter<String[]> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
         View view = convertView;
-        if(view == null)
-        {
+        if (view == null) {
             // inflate (create an object) a item from item_course and store in view
             view = LayoutInflater.from(getContext()).inflate(R.layout.item_course, parent, false);
         }
@@ -43,6 +49,12 @@ public class CoursesAdapter extends ArrayAdapter<String[]> {
         // set text of view
         courseCodeText.setText(courseInfo[0]);
         courseNameText.setText(courseInfo[1]);
+
+//        courseCodeText.setTextColor(colors[(new Random().nextInt(1000)) % colors.length]);
+
+//        Log.i("Count check", String.valueOf(positionColors % colors.length));
+//        positionColors += 1;
+
         // return item
         return view;
     }
