@@ -12,9 +12,9 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.omkar.android.adapters.CoursesAdapter;
 import com.example.omkar.android.fragments.AddCourseFragment;
+import com.example.omkar.android.fragments.DocumentSimilarityFragment;
 import com.example.omkar.android.helpers.DatabaseHelper;
 import com.example.omkar.android.interfaces.CoursesViewInterface;
 import com.example.omkar.android.models.Course;
@@ -34,9 +35,9 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
 
     private DrawerLayout mDrawerLayout;
     private FloatingActionButton mAddCourseFab;
-    private AddCourseFragment mAddCourseFragment;
+    private Class mCurrentFragmentClass;
     private DatabaseHelper mDbHelper;
-    private RecyclerView mRecyclerView;
+//    private RecyclerView mRecyclerView;
 
     private ArrayList<String[]> mCourseCodeList;
     private CoursesAdapter mCoursesAdapter;
@@ -57,6 +58,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
         initToolbar("Courses", R.drawable.ic_menu);
         initSideNav();
         initAddCourseFab();
+
     }
 
 
@@ -129,14 +131,14 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // get current fragment in activity
-        Fragment currentFragment = getFragmentManager().findFragmentById(R.id.addCourseFrag);
+        Fragment currentFragment = getFragmentManager().findFragmentByTag("Add New Course Fragment");
         // if yes then call onOptionsItemSelected of fragment first
         if (currentFragment != null && currentFragment.onOptionsItemSelected(item)) {
             // onOptionsItemSelected of current fragment will return true is item is home
             return true;
         }
 
-        // check for item selection in this Activity
+        // check for item selection in Toolbar
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
@@ -160,19 +162,19 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
                 // if there are no previous fragments in back stack
                 if (getFragmentManager().getBackStackEntryCount() == 0) {
                     // Create a new fragment
-                    mAddCourseFragment = new AddCourseFragment();
+                    AddCourseFragment mAddCourseFragment = new AddCourseFragment();
                     // get transaction manager
                     FragmentManager manager = getFragmentManager();
                     // start transaction
                     FragmentTransaction transaction = manager.beginTransaction();
-                    transaction.add(R.id.addCourseFrag, mAddCourseFragment, "Add New Course Fragment");
+                    transaction.add(R.id.fragContainer, mAddCourseFragment, "Add New Course Fragment");
                     // add this fragment to stack
                     transaction.addToBackStack("Add New Course Fragment");
                     // commit this transaction
                     transaction.commit();
 
-                    // hide add new course fab
-                    setFabHidden(true);
+                    // set current fragment class as Add Course Fragment
+                    mCurrentFragmentClass = AddCourseFragment.class;
                 }
             }
         });
@@ -203,18 +205,68 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
      * Set listener for Side Nav item selection
      */
     private void initSideNav() {
+        // set listener
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        // On selection, highlight it and quit the drawer
-                        menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
+                        selectDrawerItem(menuItem);
                         return true;
+
                     }
                 });
     }
+
+
+    /**
+     * Handler for nav drawer selection
+     * @param menuItem item clicked in nav drawer
+     */
+    public void selectDrawerItem(MenuItem menuItem) {
+        removeAllFragments();
+
+        mCurrentFragmentClass = null;
+        // Create a new fragment and specify the fragment to show based on nav item clicked
+        Fragment fragment = null;
+
+        // select
+        switch(menuItem.getItemId()) {
+            case R.id.home:
+                // On selection, highlight it and quit the drawer
+                menuItem.setChecked(true);
+                setFabHidden(false);
+                mDrawerLayout.closeDrawers();
+                return;
+            case R.id.similarity_check:
+                mCurrentFragmentClass = DocumentSimilarityFragment.class;
+                break;
+            default:
+                return;
+        }
+
+        // make fragment object from class
+        try {
+            fragment = (Fragment) mCurrentFragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragContainer, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+        // Highlight the selected item has been done by NavigationView
+        menuItem.setChecked(true);
+        // Set action bar title
+        setTitle(menuItem.getTitle());
+        // Close the navigation drawer
+        mDrawerLayout.closeDrawers();
+    }
+
 
 
     /**
@@ -248,6 +300,12 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
         }
     }
 
+
+    /**
+     * Hide view of Courses Activity and set background color
+     * @param enabled true: hide, false: show
+     * @param color set background color
+     */
     @Override
     public void setViewHidden(boolean enabled, int color) {
         ListView l = findViewById(R.id.courses_list_view);
@@ -257,6 +315,47 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
         }
         else {
             l.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+    /**
+     * Remove all fragments from back stack
+     */
+    private void removeAllFragments () {
+        // remove all fragments
+        FragmentManager fragmentManager = getFragmentManager();
+        for(int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+            fragmentManager.popBackStack();
+        }
+    }
+
+
+    /**
+     * Decide navigation on press of back button
+     */
+    @Override
+    public void onBackPressed() {
+
+        // if fragments are present
+        if (mCurrentFragmentClass != null) {
+            // remove all fragments in stack
+            removeAllFragments();
+            // no current fragment
+            mCurrentFragmentClass = null;
+            // select home item in nav drawer and check it
+            NavigationView navigation = findViewById(R.id.nav_view);
+            Menu drawer_menu = navigation.getMenu();
+            MenuItem menuItem;
+            menuItem = drawer_menu.findItem(R.id.home);
+            if(!menuItem.isChecked())
+            {
+                menuItem.setChecked(true);
+            }
+        }
+        else {
+            Log.d("Check back", "SUPER");
+            super.onBackPressed();
         }
     }
 }

@@ -6,7 +6,7 @@ import com.example.omkar.android.models.Course;
  * Created by omkar on 13-Mar-18.
  */
 
-// Contains methods implemented in Courses Activity and used by Add Course Fragment
+// Contains methods implemented in Courses Activity for accessing its views
 public interface CoursesViewInterface {
 
     public void initToolbar(String title, int ic_home);

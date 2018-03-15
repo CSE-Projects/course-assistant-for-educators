@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EEEEEE"
+    android:background="#FAFAFA"
     android:fitsSystemWindows="true">
 
     <!--Main body-->
@@ -69,7 +69,7 @@
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:id="@+id/addCourseFrag">
+        android:id="@+id/fragContainer">
     </FrameLayout>
 
 
