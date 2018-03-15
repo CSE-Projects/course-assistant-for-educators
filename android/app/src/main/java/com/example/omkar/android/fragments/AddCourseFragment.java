@@ -102,7 +102,6 @@ public class AddCourseFragment extends Fragment {
                 saveCourse();
                 // go back to Courses Activity
                 getActivity().onBackPressed();
-
         }
         return super.onOptionsItemSelected(item);
     }

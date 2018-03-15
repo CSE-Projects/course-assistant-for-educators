@@ -32,7 +32,6 @@ import java.util.ArrayList;
 
 public class CoursesActivity extends AppCompatActivity implements CoursesViewInterface {
 
-
     private DrawerLayout mDrawerLayout;
     private FloatingActionButton mAddCourseFab;
     private Class mCurrentFragmentClass;
@@ -77,7 +76,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
         if (c.moveToFirst()){
             do {
                 // add to list
-                mCourseCodeList.add(new String[]{c.getString(0), c.getString(1)});
+                mCourseCodeList.add(new String[]{c.getString(0), c.getString(1), c.getString(2), c.getString(3)});
             } while(c.moveToNext());
         }
         c.close();
@@ -98,6 +97,9 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
 
                 // send course with intent
                 courseIntent.putExtra("courseCode", courseInfo[0]);
+                courseIntent.putExtra("courseName", courseInfo[1]);
+                courseIntent.putExtra("emailCr", courseInfo[2]);
+                courseIntent.putExtra("emailTa", courseInfo[3]);
                 startActivity(courseIntent);
             }
         });
@@ -197,7 +199,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
         actionbar.setHomeAsUpIndicator(ic_home);
         // set title
         actionbar.setTitle(title);
-        Log.d("Check init toolba", title);
+        Log.d("Check init toolbar", title);
     }
 
 

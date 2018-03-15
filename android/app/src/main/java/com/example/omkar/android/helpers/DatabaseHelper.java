@@ -82,7 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param course course object
      * @return true
      */
-    public boolean insertCourse (Course course) {
+    public void insertCourse (Course course) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("courseCode", course.getCourseCode());
@@ -92,7 +92,52 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("emailCr", course.getEmailCr());
         contentValues.put("emailTa", course.getEmailTa());
         db.insert("courses", null, contentValues);
-        return true;
+
+        insertStudentForCourse(course.getCourseCode(), course.getStudentCount());
+    }
+
+
+    /**
+     * Insert Students for a course in students table
+     * @param courseCode course code for that course
+     * @param studentCount student count for that course
+     */
+    private void insertStudentForCourse(String courseCode, int studentCount) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        for (int i = 0; i < studentCount; ++i) {
+            contentValues.put("studentCourseCode", courseCode);
+            contentValues.put("id", i + 1);
+            contentValues.put("dates", "");
+            contentValues.put("insem", 0);
+            contentValues.put("endsem", 0);
+        }
+        db.insert("students", null, contentValues);
+    }
+
+
+    /**
+     * Get student count for a course
+     * @param courseCode corse code for that course
+     * @return student count for the course
+     */
+    public int getStudentCount(String courseCode) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery( "select courseCode,studentCount from courses", null );
+        int studentCount = 0;
+        // iterate through column elements
+        if (c.moveToFirst()){
+            do {
+                // check for the course code passed
+                if (c.getString(0).equals(courseCode)) {
+                    // found course entry
+                    studentCount = c.getInt(1);
+                    break;
+                }
+            } while(c.moveToNext());
+        }
+        c.close();
+        return studentCount;
     }
 
 
@@ -102,6 +147,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public Cursor getCourseInfo() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery( "select courseCode,courseName from courses", null );
+        return db.rawQuery( "select courseCode,courseName,emailCr,emailTa from courses", null );
     }
 }
