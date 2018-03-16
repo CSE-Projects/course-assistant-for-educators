@@ -268,7 +268,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
         // Set action bar title
-        setTitle(menuItem.getTitle());
+//        setTitle(menuItem.getTitle());
         // Close the navigation drawer
         mDrawerLayout.closeDrawers();
     }
