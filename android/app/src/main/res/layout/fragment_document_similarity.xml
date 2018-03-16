@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_marginTop="72dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:text="Document 1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!--First string-->
+    <EditText
+        android:id="@+id/doc1"
+        android:hint="Enter first document"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_margin="16dp"
+        android:inputType="textMultiLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_margin="16dp"
+        android:text="Document 2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <!--Second string-->
+    <EditText
+        android:id="@+id/doc2"
+        android:hint="Enter second document"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_margin="16dp"
+        android:inputType="textMultiLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/similarity_button"
+        android:padding="8dp"
+        android:layout_margin="16dp"
+        android:text="SIMILARITY"
+        android:background="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@android:color/white"/>
+
+    <!--Display result-->
+    <TextView
+        android:id="@+id/display_similarity"
+        android:textSize="20dp"
+        android:padding="8dp"
+        android:textStyle="bold"
+        android:hint="Result"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
