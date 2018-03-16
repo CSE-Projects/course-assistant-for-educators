@@ -3,6 +3,7 @@ package com.example.omkar.android.fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -100,16 +101,24 @@ public class AddCourseFragment extends Fragment {
             case R.id.save:
                 // save course
                 saveCourse();
-                // go back to Courses Activity
+                // return back
                 getActivity().onBackPressed();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.d("RESUME ADD COURSE FRAG", "IN");
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.d("DESTROY ADD COURSE FRAG", "IN");
         // Reset Courses Activity Toolbar
         ((CoursesActivity)getActivity()).setDrawerLocked(false);
         ((CoursesActivity)getActivity()).initToolbar("Courses", R.drawable.ic_menu);

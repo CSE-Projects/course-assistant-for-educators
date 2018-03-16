@@ -345,6 +345,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
 
         // if fragments are present
         if (mCurrentFragmentClass != null) {
+            Log.d("Check back", "fRAG");
             // remove all fragments in stack
             removeAllFragments();
             // no current fragment
