@@ -55,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * make call to static method "getInstance()" instead.
      */
     private DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME , null, 1);
+        super(context, DATABASE_NAME, null, 1);
     }
 
 
@@ -82,10 +82,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Insert a Course attributes in course table
+     *
      * @param course course object
      * @return true
      */
-    public void insertCourse (Course course) {
+    public void insertCourse(Course course) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("courseCode", course.getCourseCode());
@@ -102,34 +103,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Insert Students for a course in students table
-     * @param courseCode course code for that course
+     *
+     * @param courseCode   course code for that course
      * @param studentCount student count for that course
      */
     private void insertStudentForCourse(String courseCode, int studentCount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         for (int i = 0; i < studentCount; ++i) {
-            contentValues.put("studentCourseCode", courseCode);
+            contentValues.put("courseCode", courseCode);
             contentValues.put("id", i + 1);
             contentValues.put("dates", "");
             contentValues.put("insem", 0);
             contentValues.put("endsem", 0);
+            db.insert("students", null, contentValues);
         }
-        db.insert("students", null, contentValues);
+
     }
 
 
     /**
      * Get student count for a course
+     *
      * @param courseCode corse code for that course
      * @return student count for the course
      */
     public int getStudentCount(String courseCode) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery( "select courseCode,studentCount from courses", null );
+        Cursor c = db.rawQuery("select courseCode,studentCount from courses", null);
         int studentCount = 0;
         // iterate through column elements
-        if (c.moveToFirst()){
+        if (c.moveToFirst()) {
             do {
                 // check for the course code passed
                 if (c.getString(0).equals(courseCode)) {
@@ -137,7 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     studentCount = c.getInt(1);
                     break;
                 }
-            } while(c.moveToNext());
+            } while (c.moveToNext());
         }
         c.close();
         return studentCount;
@@ -146,39 +150,52 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Update attendance field in dates
-     * @param courseCode course for the attendance
+     *
+     * @param courseCode            course for the attendance
      * @param studentAttendanceList attenance list
-     * @param date date of taking attendance
+     * @param date                  date of taking attendance
      */
     public void updateAttendance(String courseCode, ArrayList<AddAttendanceFragment.StudentAttendance> studentAttendanceList, String date) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor c = db.rawQuery( "select courseCode,id,dates from students", null);
+        Cursor c = db.rawQuery("select courseCode,id,dates from students", null);
         // iterator for student attendance list
         int it = 0;
+
         // move though rows in tables selected above
-        if (c.moveToFirst()){
+        if (c.moveToFirst()) {
             do {
-                if (it == studentAttendanceList.size()){
+                if (it == studentAttendanceList.size()) {
                     break;
                 }
-                // check for the course code present
+                // check for the course code
                 if (c.getString(0).equals(courseCode)) {
-                    String id = studentAttendanceList.get(it).getId();
                     // check if student is present or absent
-                    if (studentAttendanceList.get(it).isChecked() && c.getString(1).equals(id)) {
+                    if (studentAttendanceList.get(it).isChecked()) {
                         String dates = c.getString(2);
                         dates += "," + date;
                         // add date to dates in table
-                        ContentValues values=new ContentValues();
-                        values.put("dates",dates);
-                        db.update(STUDENT_TABLE_NAME, values, "studentCourseCode='"+courseCode+"' and id='"+Integer.valueOf(id)+"'", null);
+                        ContentValues values = new ContentValues();
+                        values.put("dates", dates);
+                        db.update("students", values, "courseCode= '" + courseCode + "' AND id= " + (it + 1) + "", null);
                     }
                     ++it;
                 }
-            } while(c.moveToNext());
+            } while (c.moveToNext());
         }
         c.close();
+//        c = db.rawQuery("select courseCode,id,dates from students", null);
+//
+//        // move though rows in tables selected above
+//        if (c.moveToFirst()) {
+//            do {
+//                Log.d("DATES", c.getString(0));
+//                Log.d("DATES", c.getString(1));
+//                Log.d("DATES", c.getString(2));
+//
+//            } while (c.moveToNext());
+//        }
+//        c.close();
     }
 
 
