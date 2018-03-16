@@ -6,16 +6,6 @@
     android:gravity="center"
     android:padding="16dp">
 
-    <!-- Check box -->
-    <CheckBox
-        android:id="@+id/check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginStart="16dp"
-        android:backgroundTint="@color/green"
-        />
-
     <!-- Student Id -->
     <TextView
         android:id="@+id/studentIdText"
@@ -25,7 +15,17 @@
         android:layout_weight="12"
         android:layout_gravity="center_vertical"
         android:textColor="@android:color/black"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp" />
+
+    <!-- Check box -->
+    <CheckBox
+        android:id="@+id/check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/green"
+        />
 
 </LinearLayout>

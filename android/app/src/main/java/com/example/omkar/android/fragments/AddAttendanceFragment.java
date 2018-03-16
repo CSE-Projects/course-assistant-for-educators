@@ -3,22 +3,24 @@ package com.example.omkar.android.fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.omkar.android.CourseActivity;
 import com.example.omkar.android.R;
 import com.example.omkar.android.adapters.AddAttendanceAdapter;
 import com.example.omkar.android.helpers.DatabaseHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by omkar on 15-Mar-18.
@@ -29,8 +31,9 @@ public class AddAttendanceFragment extends Fragment{
     // view of fragment
     View view;
     private AddAttendanceAdapter mAddAttendanceAdapter;
-    private ArrayList<Integer[]> mStudentList;
+    private ArrayList<StudentAttendance> mStudentAttendanceList;
     private DatabaseHelper mDatabaseHelper;
+    private String mCourseCode;
 
 
     @Override
@@ -40,6 +43,8 @@ public class AddAttendanceFragment extends Fragment{
         setHasOptionsMenu(true);
         ((CourseActivity)getActivity()).initToolbar("Add Attendance");
         ((CourseActivity)getActivity()).setViewHidden(true);
+
+        fillStudentList();
     }
 
 
@@ -53,7 +58,7 @@ public class AddAttendanceFragment extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        fillStudentList();
+
         initList();
     }
 
@@ -63,27 +68,11 @@ public class AddAttendanceFragment extends Fragment{
      */
     private void initList() {
         // context of activity
-        mAddAttendanceAdapter = new AddAttendanceAdapter(getActivity(), mStudentList);
+        mAddAttendanceAdapter = new AddAttendanceAdapter(getActivity(), mStudentAttendanceList);
         // set listener
         ListView addAttendanceList = view.findViewById(R.id.add_attendance_list_view);
-        addAttendanceList.setAdapter(mAddAttendanceAdapter);
-
-        addAttendanceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // check or un-check checkbox
-                Integer[] student = mStudentList.get(position);
-                if (student[1] == 0) {
-                    student[1] = 1;
-                }
-                else {
-                    student[1] = 0;
-                }
-                mAddAttendanceAdapter.notifyDataSetChanged();
-            }
-        });
         // set adapter
-
+        addAttendanceList.setAdapter(mAddAttendanceAdapter);
     }
 
 
@@ -91,18 +80,37 @@ public class AddAttendanceFragment extends Fragment{
      * Helper to fill student id list array from database
      */
     private void fillStudentList() {
+        // instantiate student list
+        mStudentAttendanceList = new ArrayList<>();
 
-        mStudentList = new ArrayList<>();
-
+        // get the course code
         Bundle courseInfo = getActivity().getIntent().getExtras();
-        Log.d("Bundle Check", courseInfo.getString("courseCode"));
+        mCourseCode = courseInfo.getString("courseCode");
+//        Log.d("Bundle Check", courseInfo.getString("courseCode"));
 
+        // get student count
         mDatabaseHelper = DatabaseHelper.getInstance(getActivity());
-        Log.d("DB STUDNET COUNT", String.valueOf(mDatabaseHelper.getStudentCount(courseInfo.getString("courseCode"))));
+        int studentCount = mDatabaseHelper.getStudentCount(mCourseCode);
+//        Log.d("DB STUDNET COUNT", String.valueOf(mDatabaseHelper.getStudentCount(courseInfo.getString("courseCode"))));
 
-        for (int i= 1; i <= mDatabaseHelper.getStudentCount(courseInfo.getString("courseCode")); ++i) {
-            mStudentList.add(new Integer[]{ new Integer(i), 0});
+        // fill student list
+        for (int i= 1; i <= studentCount; ++i) {
+            mStudentAttendanceList.add(new StudentAttendance(String.valueOf(i), false));
         }
+    }
+
+
+    /**
+     * Save attendance in database
+     */
+    private void saveAttendance() {
+        // get db instance
+        mDatabaseHelper = DatabaseHelper.getInstance(getActivity());
+        // get current date
+        String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+        // update attendance
+        mDatabaseHelper.updateAttendance(mCourseCode, mStudentAttendanceList, date);
+        Toast.makeText(getActivity(), "Saved!", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -129,6 +137,10 @@ public class AddAttendanceFragment extends Fragment{
             case android.R.id.home:
                 getActivity().onBackPressed();
                 return true;
+            case R.id.save:
+                saveAttendance();
+                getActivity().onBackPressed();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -141,4 +153,34 @@ public class AddAttendanceFragment extends Fragment{
         ((CourseActivity)getActivity()).initToolbar("TITLE");
         ((CourseActivity)getActivity()).setViewHidden(false);
     }
+
+
+    /**
+     * Class template for Attendance of Student
+     */
+    public class StudentAttendance {
+
+        private String id = "";
+        private boolean checked = false;
+
+        public StudentAttendance(String name, boolean checked) {
+            this.id = name;
+            this.checked = checked;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public boolean isChecked() {
+            return checked;
+        }
+
+        public void setChecked(boolean checked) {
+            this.checked = checked;
+        }
+    }
+
+
+
 }

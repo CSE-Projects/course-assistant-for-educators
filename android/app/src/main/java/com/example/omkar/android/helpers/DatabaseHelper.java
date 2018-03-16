@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.omkar.android.fragments.AddAttendanceFragment;
 import com.example.omkar.android.models.Course;
+
+import java.util.ArrayList;
 
 /**
  * Created by omkar on 13-Mar-18.
@@ -138,6 +141,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         c.close();
         return studentCount;
+    }
+
+
+    /**
+     * Update attendance field in dates
+     * @param courseCode course for the attendance
+     * @param studentAttendanceList attenance list
+     * @param date date of taking attendance
+     */
+    public void updateAttendance(String courseCode, ArrayList<AddAttendanceFragment.StudentAttendance> studentAttendanceList, String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor c = db.rawQuery( "select courseCode,id,dates from students", null);
+        // iterator for student attendance list
+        int it = 0;
+        // move though rows in tables selected above
+        if (c.moveToFirst()){
+            do {
+                if (it == studentAttendanceList.size()){
+                    break;
+                }
+                // check for the course code present
+                if (c.getString(0).equals(courseCode)) {
+                    String id = studentAttendanceList.get(it).getId();
+                    // check if student is present or absent
+                    if (studentAttendanceList.get(it).isChecked() && c.getString(1).equals(id)) {
+                        String dates = c.getString(2);
+                        dates += "," + date;
+                        // add date to dates in table
+                        ContentValues values=new ContentValues();
+                        values.put("dates",dates);
+                        db.update(STUDENT_TABLE_NAME, values, "studentCourseCode='"+courseCode+"' and id='"+Integer.valueOf(id)+"'", null);
+                    }
+                    ++it;
+                }
+            } while(c.moveToNext());
+        }
+        c.close();
     }
 
 
