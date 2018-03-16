@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.omkar.android.adapters.CoursesAdapter;
 import com.example.omkar.android.fragments.AddCourseFragment;
 import com.example.omkar.android.fragments.DocumentSimilarityFragment;
+import com.example.omkar.android.fragments.HelpAndFeedbackFragment;
 import com.example.omkar.android.helpers.DatabaseHelper;
 import com.example.omkar.android.interfaces.CoursesViewInterface;
 import com.example.omkar.android.models.Course;
@@ -242,6 +243,9 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
                 return;
             case R.id.similarity_check:
                 mCurrentFragmentClass = DocumentSimilarityFragment.class;
+                break;
+            case R.id.help_feedback:
+                mCurrentFragmentClass = HelpAndFeedbackFragment.class;
                 break;
             default:
                 return;
