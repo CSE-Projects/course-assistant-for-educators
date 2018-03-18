@@ -113,7 +113,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
      */
     public void insertNewCourse(Course course) {
         // add course code and name to the list
-        mCourseCodeList.add(new String[]{course.getCourseCode(), course.getCourseName()});
+        mCourseCodeList.add(new String[]{course.getCourseCode(), course.getCourseName(), course.getEmailCr(), course.getEmailTa()});
 //        for (String member : mCourseCodeList){
 //            Log.i("Member name: ", member);
 //        }
