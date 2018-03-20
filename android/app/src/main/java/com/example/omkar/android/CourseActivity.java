@@ -66,8 +66,10 @@ public class CourseActivity extends AppCompatActivity implements CourseViewInter
      * @param enabled true: hide, false: show
      */
     @Override
-    public void setViewHidden(boolean enabled) {
+    public void setViewHidden(boolean enabled, int color) {
         LinearLayout courseView = findViewById(R.id.course_view);
+        LinearLayout l = findViewById(R.id.layout_course);
+        l.setBackgroundColor(getResources().getColor(color));
         if (enabled) {
             courseView.setVisibility(View.GONE);
         }

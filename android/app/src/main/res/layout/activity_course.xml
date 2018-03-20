@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/layout_course"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background"
@@ -74,14 +75,15 @@
                         android:layout_height="wrap_content"
                         android:text="ADD"
                         android:textSize="16sp"
-                        android:textColor="@color/colorPrimary"
-                        style="?android:attr/borderlessButtonStyle" />
+                        android:textColor="@color/orange"
+                        style="?android:attr/borderlessButtonStyle"
+                        />
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="VIEW"
                         android:textSize="16sp"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/orange"
                         style="?android:attr/borderlessButtonStyle" />
                 </LinearLayout>
             </LinearLayout>
@@ -126,7 +128,7 @@
                         android:layout_height="wrap_content"
                         android:text="View"
                         android:textSize="16sp"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/orange"
                         style="?android:attr/borderlessButtonStyle" />
 
                 </LinearLayout>
@@ -174,7 +176,7 @@
                         android:text="CR"
                         android:textSize="16sp"
                         android:textAllCaps="false"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/orange"
                         style="?android:attr/borderlessButtonStyle" />
                     <Button
                         android:onClick="contactMailTa"
@@ -183,7 +185,7 @@
                         android:text="TA"
                         android:textSize="16sp"
                         android:textAllCaps="false"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/orange"
                         style="?android:attr/borderlessButtonStyle" />
                 </LinearLayout>
             </LinearLayout>

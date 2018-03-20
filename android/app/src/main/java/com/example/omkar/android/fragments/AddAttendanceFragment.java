@@ -42,7 +42,7 @@ public class AddAttendanceFragment extends Fragment{
         // configure Toolbar in Course Activity
         setHasOptionsMenu(true);
         ((CourseActivity)getActivity()).initToolbar("Add Attendance");
-        ((CourseActivity)getActivity()).setViewHidden(true);
+        ((CourseActivity)getActivity()).setViewHidden(true, R.color.white);
 
         fillStudentList();
     }
@@ -151,7 +151,7 @@ public class AddAttendanceFragment extends Fragment{
         super.onDestroy();
         // Reset Course Activity Toolbar
         ((CourseActivity)getActivity()).initToolbar("TITLE");
-        ((CourseActivity)getActivity()).setViewHidden(false);
+        ((CourseActivity)getActivity()).setViewHidden(false, R.color.background);
     }
 
 

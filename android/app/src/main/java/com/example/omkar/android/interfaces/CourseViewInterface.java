@@ -7,5 +7,5 @@ package com.example.omkar.android.interfaces;
 public interface CourseViewInterface {
 
     public void initToolbar(String title);
-    public void setViewHidden(boolean enabled);
+    public void setViewHidden(boolean enabled, int color);
 }

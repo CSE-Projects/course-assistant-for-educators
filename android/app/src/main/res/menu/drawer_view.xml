@@ -22,7 +22,7 @@
         <item
             android:id="@+id/help_feedback"
             android:icon="@drawable/ic_feedback"
-            android:title="Help and feedback" />
+            android:title="Help and feedback"/>
 
     </group>
 </menu>
