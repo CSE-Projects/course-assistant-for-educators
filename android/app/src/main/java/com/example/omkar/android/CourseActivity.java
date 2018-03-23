@@ -23,7 +23,7 @@ public class CourseActivity extends AppCompatActivity implements CourseViewInter
     private String mTaEmail;
     private String mCourseName;
 
-    private static final String EMAIL_BODY = "Sent from: Course Assistant";
+    private static final String EMAIL_BODY = "\n\nSent from: Course Assistant";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,10 +126,11 @@ public class CourseActivity extends AppCompatActivity implements CourseViewInter
 
 
     // methods to contact CR and TA
+    // TODO: Limit send options to only email apps
     public void contactMailCr(View v) {
         Intent email = new Intent(android.content.Intent.ACTION_SEND);
 
-        email.setType("plain/text");
+        email.setType("text/plain");
         email.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{mCrEmail});
         email.putExtra(android.content.Intent.EXTRA_SUBJECT, mCourseCode + ": " + mCourseName);
         email.putExtra(android.content.Intent.EXTRA_TEXT, EMAIL_BODY);

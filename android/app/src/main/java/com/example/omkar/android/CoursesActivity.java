@@ -43,6 +43,8 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
     private CoursesAdapter mCoursesAdapter;
     private ListView mListView;
 
+    private static final String EMAIL_BODY = "\n\nSent from: Course Assistant";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -247,6 +249,17 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
             case R.id.help_feedback:
                 mCurrentFragmentClass = HelpAndFeedbackFragment.class;
                 break;
+            case R.id.contact_us:
+                // select home in nav drawer
+                menuItem.setChecked(false);
+                NavigationView navigation = findViewById(R.id.nav_view);
+                Menu drawer_menu = navigation.getMenu();
+                MenuItem m = drawer_menu.findItem(R.id.home);
+                m.setChecked(true);
+                mDrawerLayout.closeDrawers();
+                // set intent
+                contactUs();
+                return;
             default:
                 return;
         }
@@ -273,6 +286,20 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
         mDrawerLayout.closeDrawers();
     }
 
+
+    /**
+     * contact us handler
+     */
+    private void contactUs() {
+        Intent email = new Intent(android.content.Intent.ACTION_SEND);
+
+        email.setType("text/plain");
+        email.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"course-assistant@gmail.com"});
+        email.putExtra(android.content.Intent.EXTRA_SUBJECT, "Query");
+        email.putExtra(android.content.Intent.EXTRA_TEXT, EMAIL_BODY);
+
+        startActivity(Intent.createChooser(email, "Send mail"));
+    }
 
 
     /**
@@ -353,8 +380,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
             // select home item in nav drawer and check it
             NavigationView navigation = findViewById(R.id.nav_view);
             Menu drawer_menu = navigation.getMenu();
-            MenuItem menuItem;
-            menuItem = drawer_menu.findItem(R.id.home);
+            MenuItem menuItem = drawer_menu.findItem(R.id.home);
             if(!menuItem.isChecked())
             {
                 menuItem.setChecked(true);
