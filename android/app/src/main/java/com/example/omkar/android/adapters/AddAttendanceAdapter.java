@@ -55,7 +55,7 @@ public class AddAttendanceAdapter extends ArrayAdapter<AddAttendanceFragment.Stu
             // tag view with the holder
             view.setTag(holder);
 
-            // If CheckBox is toggled, update the studentAttendance it is tagged with.
+            // If CheckBox is toggled, update the studentAttendance obj it is tagged with.
             holder.checkBox.setOnClickListener(new View.OnClickListener()
             {
                 public void onClick(View v)

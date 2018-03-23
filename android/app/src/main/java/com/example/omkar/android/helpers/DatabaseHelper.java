@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.omkar.android.fragments.AddAttendanceFragment;
 import com.example.omkar.android.models.Course;
@@ -32,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COURSE_COLUMN_CR_EMAIL = "emailCR";
     public static final String COURSE_COLUMN_TA_EMAIL = "emailTa";
 
-    public static final String STUDENT_COLUMN_COURSE_CODE = "studentCourseCode";
+    public static final String STUDENT_COLUMN_COURSE_CODE = "courseCode";
     public static final String COURSE_COLUMN_ID = "id";
     public static final String COURSE_COLUMN_INSEMESTER = "insem";
     public static final String COURSE_COLUMN_ENDSEMESTER = "endsem";
@@ -125,7 +126,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Get student count for a course
      *
-     * @param courseCode corse code for that course
+     * @param courseCode course code for that course
      * @return student count for the course
      */
     public int getStudentCount(String courseCode) {
@@ -152,7 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * Update attendance field in dates
      *
      * @param courseCode            course for the attendance
-     * @param studentAttendanceList attenance list
+     * @param studentAttendanceList attendance list
      * @param date                  date of taking attendance
      */
     public void updateAttendance(String courseCode, ArrayList<AddAttendanceFragment.StudentAttendance> studentAttendanceList, String date) {
@@ -184,18 +185,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (c.moveToNext());
         }
         c.close();
-//        c = db.rawQuery("select courseCode,id,dates from students", null);
-//
-//        // move though rows in tables selected above
-//        if (c.moveToFirst()) {
-//            do {
-//                Log.d("DATES", c.getString(0));
-//                Log.d("DATES", c.getString(1));
-//                Log.d("DATES", c.getString(2));
-//
-//            } while (c.moveToNext());
-//        }
-//        c.close();
+
+        c = db.rawQuery("select courseCode,id,dates from students", null);
+        // move though rows in tables selected above
+        if (c.moveToFirst()) {
+            do {
+                Log.d("CODE", c.getString(0));
+                Log.d("ID", c.getString(1));
+                Log.d("DATES", c.getString(2));
+
+            } while (c.moveToNext());
+        }
+        c.close();
     }
 
 
@@ -206,5 +207,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getCourseInfo() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery( "select courseCode,courseName,emailCr,emailTa from courses", null );
+    }
+
+
+    /**
+     * Get course code and dates from students table
+     * @return cursor to both columns
+     */
+    public Cursor getStudentAttendance() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery( "select courseCode,dates from students", null );
     }
 }

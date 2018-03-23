@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.omkar.android.fragments.AddAttendanceFragment;
+import com.example.omkar.android.fragments.ViewAttendanceFragment;
 import com.example.omkar.android.interfaces.CourseViewInterface;
 
 public class CourseActivity extends AppCompatActivity implements CourseViewInterface {
@@ -39,7 +40,6 @@ public class CourseActivity extends AppCompatActivity implements CourseViewInter
         // init methods
         initToolbar(mCourseCode);
         initButtons();
-
     }
 
 
@@ -84,6 +84,8 @@ public class CourseActivity extends AppCompatActivity implements CourseViewInter
      * initialize buttons in the cards of view
      */
     private void initButtons() {
+        // TODO: Remove redundant FragmentManager objects in each listener
+        // add attendance button
         Button addAttendance = findViewById(R.id.addAttendance);
         addAttendance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +99,25 @@ public class CourseActivity extends AppCompatActivity implements CourseViewInter
                 transaction.add(R.id.fragContainer, addAttendanceFragment, "Add Attendance Fragment");
                 // add this fragment to stack
                 transaction.addToBackStack("Add Attendance Fragment");
+                // commit this transaction
+                transaction.commit();
+            }
+        });
+
+        // view attendance button
+        Button viewAttendance = findViewById(R.id.viewAttendance);
+        viewAttendance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a new fragment
+                ViewAttendanceFragment viewAttendanceFragment = new ViewAttendanceFragment();
+                // get transaction manager
+                FragmentManager manager = getFragmentManager();
+                // start transaction
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.add(R.id.fragContainer, viewAttendanceFragment, "View Attendance Fragment");
+                // add this fragment to stack
+                transaction.addToBackStack("View Attendance Fragment");
                 // commit this transaction
                 transaction.commit();
             }
@@ -125,6 +146,7 @@ public class CourseActivity extends AppCompatActivity implements CourseViewInter
         startActivity(Intent.createChooser(email, "Send mail"));
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -134,6 +156,7 @@ public class CourseActivity extends AppCompatActivity implements CourseViewInter
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onBackPressed() {
