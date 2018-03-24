@@ -1,10 +1,12 @@
 package com.example.omkar.android.fragments;
 
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -67,13 +69,17 @@ public class AddMarksFragment extends Fragment{
             EditText insemEditText = new EditText(getActivity());
             int insemid = getActivity().getResources().getIdentifier("insem"+i,"id", getActivity().getPackageName());
             insemEditText.setTag("insem" + i);
+            insemEditText.setWidth(16);
 
             EditText endsemEditText = new EditText(getActivity());
             int endsemid = getActivity().getResources().getIdentifier("endsem"+i,"id", getActivity().getPackageName());
             endsemEditText.setTag("endsem" + i);
+            endsemEditText.setWidth(16);
 
             TextView idText = new TextView(getActivity());
             idText.setText(String.valueOf(i+1));
+            idText.setGravity(Gravity.CENTER_HORIZONTAL);
+            idText.setTypeface(null, Typeface.BOLD);
 
             row.addView(idText);
             row.addView(insemEditText);
