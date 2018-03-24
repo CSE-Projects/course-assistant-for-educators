@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.example.omkar.android.fragments.AddAttendanceFragment;
 import com.example.omkar.android.fragments.StudentDetailsFragment;
+import com.example.omkar.android.fragments.AddMarksFragment;
 import com.example.omkar.android.fragments.ViewAttendanceFragment;
 import com.example.omkar.android.interfaces.CourseViewInterface;
 
@@ -124,6 +125,7 @@ public class CourseActivity extends AppCompatActivity implements CourseViewInter
             }
         });
 
+
         // view student details button
         Button viewStudentDetails = findViewById(R.id.viewStudentDetails);
         viewStudentDetails.setOnClickListener(new View.OnClickListener() {
@@ -131,13 +133,34 @@ public class CourseActivity extends AppCompatActivity implements CourseViewInter
             public void onClick(View v) {
                 // Create a new fragment
                 StudentDetailsFragment studentDetailsFragment = new StudentDetailsFragment();
+
                 // get transaction manager
                 FragmentManager manager = getFragmentManager();
                 // start transaction
                 FragmentTransaction transaction = manager.beginTransaction();
+
                 transaction.add(R.id.fragContainer, studentDetailsFragment, "Student Details Fragment");
                 // add this fragment to stack
                 transaction.addToBackStack("Student Details Fragment");
+
+            }
+        });
+
+        // add marks
+        Button addMarks = findViewById(R.id.addMarks);
+        addMarks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a new fragment
+                AddMarksFragment addMarksFragment = new AddMarksFragment();
+                // get transaction manager
+                FragmentManager manager = getFragmentManager();
+                // start transaction
+                FragmentTransaction transaction = manager.beginTransaction();
+
+                transaction.add(R.id.fragContainer, addMarksFragment, "Add Marks Fragment");
+                // add this fragment to stack
+                transaction.addToBackStack("Add Marks Fragment");
                 // commit this transaction
                 transaction.commit();
             }
