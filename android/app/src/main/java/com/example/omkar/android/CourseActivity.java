@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.omkar.android.fragments.AddAttendanceFragment;
+import com.example.omkar.android.fragments.StudentDetailsFragment;
 import com.example.omkar.android.fragments.ViewAttendanceFragment;
 import com.example.omkar.android.interfaces.CourseViewInterface;
 
@@ -118,6 +119,25 @@ public class CourseActivity extends AppCompatActivity implements CourseViewInter
                 transaction.add(R.id.fragContainer, viewAttendanceFragment, "View Attendance Fragment");
                 // add this fragment to stack
                 transaction.addToBackStack("View Attendance Fragment");
+                // commit this transaction
+                transaction.commit();
+            }
+        });
+
+        // view student details button
+        Button viewStudentDetails = findViewById(R.id.viewStudentDetails);
+        viewStudentDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a new fragment
+                StudentDetailsFragment studentDetailsFragment = new StudentDetailsFragment();
+                // get transaction manager
+                FragmentManager manager = getFragmentManager();
+                // start transaction
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.add(R.id.fragContainer, studentDetailsFragment, "Student Details Fragment");
+                // add this fragment to stack
+                transaction.addToBackStack("Student Details Fragment");
                 // commit this transaction
                 transaction.commit();
             }

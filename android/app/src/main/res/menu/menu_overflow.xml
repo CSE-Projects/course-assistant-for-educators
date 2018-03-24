@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/sort"
+        android:title="Sort"
+        app:showAsAction="never">
+        <menu
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+            <item
+                android:id="@+id/sort_marks"
+                android:title="Marks"
+                app:showAsAction="never"/>
+            <item
+                android:id="@+id/sort_attendance"
+                android:title="Attendance"
+                app:showAsAction="never"/>
+        </menu>
+    </item>
+</menu>

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.example.omkar.android.fragments.AddAttendanceFragment;
 import com.example.omkar.android.models.Course;
@@ -150,6 +149,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     /**
+     * Increment day count for a course
+     * @param courseCode of the course
+     */
+    private void incrementDayCount(String courseCode) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery("select courseCode,dayCount from courses", null);
+
+        if (c.moveToFirst()) {
+            do {
+                if (c.getString(0).equals(courseCode)) {
+                    int newDayCount = c.getInt(1);
+                    // add new day count to dayCount in table
+                    ContentValues values = new ContentValues();
+                    values.put("dayCount", newDayCount + 1);
+                    db.update("courses", values, "courseCode= '" + courseCode +"'", null);
+                }
+            } while(c.moveToNext());
+        }
+//        c = db.rawQuery("select courseCode,dayCount from courses", null);
+//        // move though rows in tables selected above
+//        if (c.moveToFirst()) {
+//            do {
+//                Log.d("CODE", c.getString(0));
+//                Log.d("DAYCOUNT", String.valueOf(c.getInt(1)));
+//            } while (c.moveToNext());
+//        }
+//        c.close();
+
+    }
+
+
+    /**
      * Update attendance field in dates
      *
      * @param courseCode            course for the attendance
@@ -186,17 +217,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         c.close();
 
-        c = db.rawQuery("select courseCode,id,dates from students", null);
-        // move though rows in tables selected above
-        if (c.moveToFirst()) {
-            do {
-                Log.d("CODE", c.getString(0));
-                Log.d("ID", c.getString(1));
-                Log.d("DATES", c.getString(2));
+//        c = db.rawQuery("select courseCode,id,dates from students", null);
+//        // move though rows in tables selected above
+//        if (c.moveToFirst()) {
+//            do {
+//                Log.d("CODE", c.getString(0));
+//                Log.d("ID", c.getString(1));
+//                Log.d("DATES", c.getString(2));
+//
+//            } while (c.moveToNext());
+//        }
+//        c.close();
 
-            } while (c.moveToNext());
-        }
-        c.close();
+        incrementDayCount(courseCode);
+    }
+
+
+    /**
+     * Get course code, insem, endsem, dates column from students table
+     * @return Cursor for the above
+     */
+    public Cursor getStudentInfo() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery( "select courseCode,insem,ensem,dates from students", null );
     }
 
 
