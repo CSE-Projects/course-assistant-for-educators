@@ -52,26 +52,28 @@ public class AddMarksFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.fragment_add_marks, container, false);
 
+        // get table layout
         TableLayout marksTable = view.findViewById(R.id.marksTable);
         for (int i = 0; i < mStudentCount; i++) {
+            // create new row
             TableRow row = new TableRow(getActivity());
             TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(0, 0, 8, 0);
             row.setLayoutParams(layoutParams);
-
+            // edit text for insem marks
             EditText insemEditText = new EditText(getActivity());
-            int insemid = getActivity().getResources().getIdentifier("insem"+i,"id", getActivity().getPackageName());
             insemEditText.setTag("insem" + i);
             insemEditText.setWidth(16);
-
+            // edit text for endsem marks
             EditText endsemEditText = new EditText(getActivity());
-            int endsemid = getActivity().getResources().getIdentifier("endsem"+i,"id", getActivity().getPackageName());
             endsemEditText.setTag("endsem" + i);
             endsemEditText.setWidth(16);
-
+            // id
             TextView idText = new TextView(getActivity());
             idText.setText(String.valueOf(i+1));
             idText.setGravity(Gravity.CENTER_HORIZONTAL);
             idText.setTypeface(null, Typeface.BOLD);
+            idText.setTextSize(18);
 
             row.addView(idText);
             row.addView(insemEditText);
@@ -79,7 +81,6 @@ public class AddMarksFragment extends Fragment{
 
             marksTable.addView(row,i);
         }
-
         return view;
     }
 
@@ -89,8 +90,9 @@ public class AddMarksFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
     }
 
+
     /**
-     * Helper to fill student id list array from database
+     * Helper to fill student list array from database
      */
     private void fillStudentList() {
         // instantiate student list
@@ -114,25 +116,24 @@ public class AddMarksFragment extends Fragment{
 
 
     /**
-     * Save attendance in database
+     * Save marks in database
      */
     private void saveMarks() {
         // get db instance
         mDatabaseHelper = DatabaseHelper.getInstance(getActivity());
         // update attendance
 
+        // accumulate entered marks
         for(int i = 0; i < mStudentCount; i++){
-            int insemid = getActivity().getResources().getIdentifier("insem"+i,"id", getActivity().getPackageName());
+            // get marks fields
             EditText insemEditText = view.findViewWithTag("insem"+i);
-
-            int endsemid = getActivity().getResources().getIdentifier("endsem"+i,"id", getActivity().getPackageName());
             EditText endsemEditText = view.findViewWithTag("endsem"+i);
-
+            // add to list
             mStudentMarksList.get(i).setInsem(Integer.valueOf(insemEditText.getText().toString()));
             mStudentMarksList.get(i).setEndsem(Integer.valueOf(endsemEditText.getText().toString()));
 
         }
-
+        // save in database
         mDatabaseHelper.addMarks(mCourseCode, mStudentMarksList);
         Toast.makeText(getActivity(), "Saved!", Toast.LENGTH_SHORT).show();
     }

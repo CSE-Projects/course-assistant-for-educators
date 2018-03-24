@@ -2,60 +2,65 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/readMarks"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
+    <!-- Table Headings -->
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:text="Student ID"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:text="Insemester"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:text="Endsemester"/>
+    </LinearLayout>
+
+    <!-- Scroll View -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_margin="16dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:textStyle="bold"
-                    android:layout_marginLeft="12dp"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Student ID"/>
-                <TextView
-                    android:layout_marginLeft="8dp"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Insemester"/>
-                <TextView
-                    android:layout_marginLeft="8dp"
-                    android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Endsemester"/>
-
-            </LinearLayout>
-
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp">
+            <!-- Table for id, insem, endsem -->
             <TableLayout
                 android:padding="8dp"
-                android:layout_margin="16dp"
                 android:id="@+id/marksTable"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:stretchColumns="0,1,2">
-
-
             </TableLayout>
-
         </LinearLayout>
-
     </ScrollView>
 
 </LinearLayout>

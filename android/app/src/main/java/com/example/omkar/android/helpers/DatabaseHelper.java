@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.example.omkar.android.fragments.AddAttendanceFragment;
 import com.example.omkar.android.fragments.AddMarksFragment;
@@ -184,7 +183,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Update attendance field in dates
-     *
      * @param courseCode            course for the attendance
      * @param studentAttendanceList attendance list
      * @param date                  date of taking attendance
@@ -265,11 +263,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Update insem, endsem marks for students in a course
+     * @param courseCode of the course
+     * @param studentMarksList student marks list
+     */
     public void addMarks(String courseCode, ArrayList<AddMarksFragment.StudentMarks> studentMarksList) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor c = db.rawQuery("select courseCode,id,insem,endsem from students", null);
-        // iterator for student attendance list
+        // iterator for student marks list
         int it = 0;
 
         // move though rows in tables selected above
@@ -280,19 +283,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 }
                 // check for the course code
                 if (c.getString(0).equals(courseCode)) {
-                    // check if student is present or absent
-//                    if (studentAttendanceList.get(it).isChecked()) {
-//                        String dates = c.getString(2);
-//                        dates += "," + date;
-//                        // add date to dates in table
-//                        ContentValues values = new ContentValues();
-//                        values.put("dates", dates);
-//                        db.update("students", values, "courseCode= '" + courseCode + "' AND id= " + (it + 1) + "", null);
-//                    }
                     ContentValues values = new ContentValues();
-
-                    Log.d("Check insem",String.valueOf(studentMarksList.get(it).getInsem()));
-
+//                    Log.d("Check insem",String.valueOf(studentMarksList.get(it).getInsem()));
+                    // add fields
                     values.put("insem", studentMarksList.get(it).getInsem());
                     values.put("endsem", studentMarksList.get(it).getEndsem());
                     db.update("students", values, "courseCode= '" + courseCode + "' AND id= " + (it + 1) + "", null);
@@ -302,16 +295,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         c.close();
 
-        c = db.rawQuery("select courseCode,insem,endsem from students", null);
-        // move though rows in tables selected above
-        if (c.moveToFirst()) {
-            do {
-                Log.d("CODE", c.getString(0));
-                Log.d("INSEM", c.getString(1));
-                Log.d("ENDSEM", c.getString(2));
-
-            } while (c.moveToNext());
-        }
-        c.close();
+//        c = db.rawQuery("select courseCode,insem,endsem from students", null);
+//        // move though rows in tables selected above
+//        if (c.moveToFirst()) {
+//            do {
+//                Log.d("CODE", c.getString(0));
+//                Log.d("INSEM", c.getString(1));
+//                Log.d("ENDSEM", c.getString(2));
+//
+//            } while (c.moveToNext());
+//        }
+//        c.close();
     }
 }
