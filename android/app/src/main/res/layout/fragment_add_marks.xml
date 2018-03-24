@@ -8,13 +8,53 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <TableLayout
-        android:id="@+id/marksTable"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_margin="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:layout_marginLeft="12dp"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Student ID"/>
+                <TextView
+                    android:layout_marginLeft="8dp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Insemester"/>
+                <TextView
+                    android:layout_marginLeft="8dp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Endsemester"/>
+
+            </LinearLayout>
+
+            <TableLayout
+                android:padding="8dp"
+                android:layout_margin="16dp"
+                android:id="@+id/marksTable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="0,1,2">
 
 
-    </TableLayout>
+            </TableLayout>
+
+        </LinearLayout>
 
     </ScrollView>
 
