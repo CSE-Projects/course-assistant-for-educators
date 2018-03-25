@@ -11,9 +11,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.example.omkar.android.CourseActivity;
 import com.example.omkar.android.R;
+import com.example.omkar.android.adapters.StudentDetailsAdapter;
 import com.example.omkar.android.helpers.DatabaseHelper;
 
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ public class StudentDetailsFragment extends Fragment{
     View view;
     private DatabaseHelper mDatabaseHelper;
     private String mCourseCode;
-    private ArrayList<String[]> mStudentsList;
+    private ArrayList<String[]> mStudentDetailsList;
 
 
     @Override
@@ -37,7 +39,7 @@ public class StudentDetailsFragment extends Fragment{
         super.onCreate(savedInstanceState);
         // configure Toolbar in Course Activity
         setHasOptionsMenu(true);
-        ((CourseActivity)getActivity()).initToolbar("Attendance");
+        ((CourseActivity)getActivity()).initToolbar("Student Details");
         ((CourseActivity)getActivity()).setViewHidden(true, R.color.white);
     }
 
@@ -46,6 +48,7 @@ public class StudentDetailsFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.fragment_student_details, container, false);
 
+        mStudentDetailsList = new ArrayList<>();
         // get course code
         Bundle courseInfo = getActivity().getIntent().getExtras();
         mCourseCode = courseInfo.getString("courseCode");
@@ -54,6 +57,8 @@ public class StudentDetailsFragment extends Fragment{
         // get student count for this course
         mDatabaseHelper = DatabaseHelper.getInstance(getActivity());
         int studentCount = mDatabaseHelper.getStudentCount(mCourseCode);
+        // get no of days attendance has been taken for this course
+        int dayCount = mDatabaseHelper.getDayCount(mCourseCode);
 
         // get student information
         Cursor c = mDatabaseHelper.getStudentInfo();
@@ -72,9 +77,10 @@ public class StudentDetailsFragment extends Fragment{
             // no of days attended
             String dates = c.getString(3);
             int dateCount = dates.length() - dates.replace(",", "").length();;
-
+            Log.d("DATE COUNT", String.valueOf(dateCount));
+            Log.d("DAY COUNT", String.valueOf(dayCount));
             // add info
-            mStudentsList.add(new String[]{c.getString(0), String.valueOf(c.getInt(1)), String.valueOf(c.getInt(2)), String.valueOf(dateCount)});
+            mStudentDetailsList.add(new String[]{String.valueOf(i + 1), String.valueOf(c.getInt(1)), String.valueOf(c.getInt(2)), dayCount != 0?String.valueOf((float)((dateCount * 100) / dayCount)):"0"});
             if(!c.moveToNext()){break;}
         }
         c.close();
@@ -87,6 +93,11 @@ public class StudentDetailsFragment extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        StudentDetailsAdapter studentDetailsAdapter = new StudentDetailsAdapter(getActivity(), mStudentDetailsList);
+        ListView studentDetailsList = view.findViewById(R.id.list_student_details);
+        studentDetailsList.setAdapter(studentDetailsAdapter);
+
     }
 
 

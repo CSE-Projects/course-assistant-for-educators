@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- View Headings -->
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:text="ID"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:text="Insem"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:text="Endsem"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:text="%"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list_student_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ListView>
 
 </LinearLayout>

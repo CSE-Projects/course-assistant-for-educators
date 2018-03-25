@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <!-- ID -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_weight="1"
+        android:layout_margin="16dp"
+        android:textAlignment="center"
+        android:id="@+id/studentId"/>
+
+    <!-- Insem -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:layout_weight="1"
+        android:id="@+id/insem"/>
+
+    <!-- Endsem -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:id="@+id/endsem"/>
+
+    <!-- Attendance % -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_weight="1"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:id="@+id/attendance"/>
+
+</LinearLayout>

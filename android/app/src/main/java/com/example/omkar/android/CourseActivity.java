@@ -133,16 +133,14 @@ public class CourseActivity extends AppCompatActivity implements CourseViewInter
             public void onClick(View v) {
                 // Create a new fragment
                 StudentDetailsFragment studentDetailsFragment = new StudentDetailsFragment();
-
                 // get transaction manager
                 FragmentManager manager = getFragmentManager();
                 // start transaction
                 FragmentTransaction transaction = manager.beginTransaction();
-
                 transaction.add(R.id.fragContainer, studentDetailsFragment, "Student Details Fragment");
                 // add this fragment to stack
                 transaction.addToBackStack("Student Details Fragment");
-
+                transaction.commit();
             }
         });
 
