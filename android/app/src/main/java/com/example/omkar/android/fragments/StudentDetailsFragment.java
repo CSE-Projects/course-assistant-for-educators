@@ -19,6 +19,8 @@ import com.example.omkar.android.adapters.StudentDetailsAdapter;
 import com.example.omkar.android.helpers.DatabaseHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by omkar on 23-Mar-18.
@@ -32,6 +34,7 @@ public class StudentDetailsFragment extends Fragment{
     private DatabaseHelper mDatabaseHelper;
     private String mCourseCode;
     private ArrayList<String[]> mStudentDetailsList;
+    StudentDetailsAdapter mStudentDetailsAdapter;
 
 
     @Override
@@ -94,10 +97,38 @@ public class StudentDetailsFragment extends Fragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        StudentDetailsAdapter studentDetailsAdapter = new StudentDetailsAdapter(getActivity(), mStudentDetailsList);
+        mStudentDetailsAdapter = new StudentDetailsAdapter(getActivity(), mStudentDetailsList);
         ListView studentDetailsList = view.findViewById(R.id.list_student_details);
-        studentDetailsList.setAdapter(studentDetailsAdapter);
+        studentDetailsList.setAdapter(mStudentDetailsAdapter);
 
+    }
+
+
+    /**
+     * Sort mStudentDetailsList by marks
+     */
+    private void sortByMarks() {
+        Collections.sort(mStudentDetailsList, new Comparator<String[]>() {
+            @Override
+            public int compare(String[] s1, String[] s2) {
+                return s1[2].compareTo(s2[2]);
+            }
+        });
+        mStudentDetailsAdapter.notifyDataSetChanged();
+    }
+
+
+    /**
+     * Sort mStudentDetailsList by attendance %
+     */
+    private void sortByAttendance() {
+        Collections.sort(mStudentDetailsList, new Comparator<String[]>() {
+            @Override
+            public int compare(String[] s1, String[] s2) {
+                return s2[3].compareTo(s1[3]);
+            }
+        });
+        mStudentDetailsAdapter.notifyDataSetChanged();
     }
 
 
@@ -125,12 +156,10 @@ public class StudentDetailsFragment extends Fragment{
                 getActivity().onBackPressed();
                 return true;
             case R.id.sort_marks:
-//                sortByMarks();
-                getActivity().onBackPressed();
+                sortByMarks();
                 return true;
             case R.id.sort_attendance:
-//                sortByAttendance();
-                getActivity().onBackPressed();
+                sortByAttendance();
                 return true;
         }
         return super.onOptionsItemSelected(item);
