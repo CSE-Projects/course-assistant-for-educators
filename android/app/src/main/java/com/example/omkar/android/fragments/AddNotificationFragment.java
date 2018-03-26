@@ -35,7 +35,7 @@ public class AddNotificationFragment extends Fragment {
         ((CourseActivity)getActivity()).initToolbar("Add Notification");
         ((CourseActivity)getActivity()).setViewHidden(true, R.color.white);
 
-        fillStudentList();
+        getCourseCode();
     }
 
 
@@ -53,9 +53,9 @@ public class AddNotificationFragment extends Fragment {
 
 
     /**
-     * Helper to fill student list array from database
+     * Get course code
      */
-    private void fillStudentList() {
+    private void getCourseCode() {
         Bundle courseInfo = getActivity().getIntent().getExtras();
         mCourseCode = courseInfo.getString("courseCode");
 
@@ -63,7 +63,7 @@ public class AddNotificationFragment extends Fragment {
 
 
     /**
-     * Save marks in database
+     * Save notifications 
      */
     private void saveNotification() {
 
