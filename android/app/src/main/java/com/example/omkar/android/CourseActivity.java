@@ -3,8 +3,11 @@ package com.example.omkar.android;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.Notification;
+import android.content.ContentUris;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -191,7 +194,13 @@ public class CourseActivity extends AppCompatActivity implements CourseViewInter
         viewNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                long startMillis = System.currentTimeMillis();
+                Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
+                builder.appendPath("time");
+                ContentUris.appendId(builder, startMillis);
+                Intent intent;
+                intent = new Intent(Intent.ACTION_VIEW).setData(builder.build());
+                startActivity(intent);
             }
         });
     }
