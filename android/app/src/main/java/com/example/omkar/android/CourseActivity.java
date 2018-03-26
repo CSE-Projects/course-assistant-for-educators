@@ -2,6 +2,7 @@ package com.example.omkar.android;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.omkar.android.fragments.AddAttendanceFragment;
+import com.example.omkar.android.fragments.AddNotificationFragment;
 import com.example.omkar.android.fragments.StudentDetailsFragment;
 import com.example.omkar.android.fragments.AddMarksFragment;
 import com.example.omkar.android.fragments.ViewAttendanceFragment;
@@ -161,6 +163,35 @@ public class CourseActivity extends AppCompatActivity implements CourseViewInter
                 transaction.addToBackStack("Add Marks Fragment");
                 // commit this transaction
                 transaction.commit();
+            }
+        });
+
+        // add notification
+        Button addNotification = findViewById(R.id.addNotification);
+        addNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a new fragment
+                AddNotificationFragment addNotificationFragment = new AddNotificationFragment();
+                // get transaction manager
+                FragmentManager manager = getFragmentManager();
+                // start transaction
+                FragmentTransaction transaction = manager.beginTransaction();
+
+                transaction.add(R.id.fragContainer, addNotificationFragment, "Add Notification Fragment");
+                // add this fragment to stack
+                transaction.addToBackStack("Add Notification Fragment");
+                // commit this transaction
+                transaction.commit();
+            }
+        });
+
+        // view notification
+        Button viewNotification = findViewById(R.id.viewNotification);
+        viewNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
