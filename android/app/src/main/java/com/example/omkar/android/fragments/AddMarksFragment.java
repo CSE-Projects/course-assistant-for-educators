@@ -129,8 +129,8 @@ public class AddMarksFragment extends Fragment{
             EditText insemEditText = view.findViewWithTag("insem"+i);
             EditText endsemEditText = view.findViewWithTag("endsem"+i);
             // add to list
-            mStudentMarksList.get(i).setInsem(Integer.valueOf(insemEditText.getText().toString()));
-            mStudentMarksList.get(i).setEndsem(Integer.valueOf(endsemEditText.getText().toString()));
+            mStudentMarksList.get(i).setInsem(Float.valueOf(insemEditText.getText().toString()));
+            mStudentMarksList.get(i).setEndsem(Float.valueOf(endsemEditText.getText().toString()));
 
         }
         // save in database
@@ -186,8 +186,8 @@ public class AddMarksFragment extends Fragment{
     public class StudentMarks {
 
         private String id = "";
-        private int insem;
-        private int endsem;
+        private float insem;
+        private float endsem;
 
         public StudentMarks(String name) {
             this.id = name;
@@ -203,19 +203,19 @@ public class AddMarksFragment extends Fragment{
             this.id = id;
         }
 
-        public int getInsem() {
+        public float getInsem() {
             return insem;
         }
 
-        public void setInsem(int insem) {
+        public void setInsem(float insem) {
             this.insem = insem;
         }
 
-        public int getEndsem() {
+        public float getEndsem() {
             return endsem;
         }
 
-        public void setEndsem(int endsem) {
+        public void setEndsem(float endsem) {
             this.endsem = endsem;
         }
     }

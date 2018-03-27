@@ -9,17 +9,18 @@ import java.util.ArrayList;
 public class Course {
 
     // members variables
-    private String mCourseName;
-    private String mCourseCode;
-    private int mStudentCount;
+    private String mCourseName = "";
+    private String mCourseCode = "";
+    private int mStudentCount = 0;
     private String mEmailCr = "";
     private String mEmailTa = "";
-    private int mDayCount;
+    private int mDayCount = 0;
 
     // member object variables
     private ArrayList<Student> mStudentList;
-    private ArrayList<ProjectDeadline> mProjectDeadlineList;
+//    private ArrayList<ProjectDeadline> mProjectDeadlineList;
 
+    public Course() {}
 
     /**
      * Constructor to Initialize params
@@ -35,38 +36,36 @@ public class Course {
         mDayCount = 0;
     }
 
-
     // getters for variables required on object instantiation
-
-    public String getCourseName() {
+    public String getmCourseName() {
         return mCourseName;
     }
 
-    public String getCourseCode() {
+    public String getmCourseCode() {
         return mCourseCode;
     }
 
-    public int getStudentCount() {
+    public int getmStudentCount() {
         return mStudentCount;
     }
 
-    public String getEmailCr() {
+    public String getmEmailCr() {
         return mEmailCr;
     }
 
-    public String getEmailTa() {
+    public String getmEmailTa() {
         return mEmailTa;
     }
 
-    public int getDayCount() {
+    public int getmDayCount() {
         return mDayCount;
     }
 
-    public void setDayCount(int dayCount) {
+    public void setmDayCount(int dayCount) {
         this.mDayCount = dayCount;
     }
 
-    public ArrayList<Student> getStudentList() {
+    public ArrayList<Student> getmStudentList() {
         return mStudentList;
     }
 
@@ -74,11 +73,31 @@ public class Course {
         mStudentList = studentList;
     }
 
-    public ArrayList<ProjectDeadline> getProjectDeadlineList() {
-        return mProjectDeadlineList;
+//    public ArrayList<ProjectDeadline> getProjectDeadlineList() {
+//        return mProjectDeadlineList;
+//    }
+//
+//    public void setProjectDeadlineList(ArrayList<ProjectDeadline> projectDeadlineList) {
+//        mProjectDeadlineList = projectDeadlineList;
+//    }
+
+    public void setmCourseName(String mCourseName) {
+        this.mCourseName = mCourseName;
     }
 
-    public void setProjectDeadlineList(ArrayList<ProjectDeadline> projectDeadlineList) {
-        mProjectDeadlineList = projectDeadlineList;
+    public void setmCourseCode(String mCourseCode) {
+        this.mCourseCode = mCourseCode;
+    }
+
+    public void setmStudentCount(int mStudentCount) {
+        this.mStudentCount = mStudentCount;
+    }
+
+    public void setmEmailCr(String mEmailCr) {
+        this.mEmailCr = mEmailCr;
+    }
+
+    public void setmEmailTa(String mEmailTa) {
+        this.mEmailTa = mEmailTa;
     }
 }

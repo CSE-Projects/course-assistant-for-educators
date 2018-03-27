@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.omkar.android.adapters.CoursesAdapter;
 import com.example.omkar.android.fragments.AddCourseFragment;
+import com.example.omkar.android.fragments.BackupFragment;
 import com.example.omkar.android.fragments.DocumentSimilarityFragment;
 import com.example.omkar.android.fragments.HelpAndFeedbackFragment;
 import com.example.omkar.android.helpers.DatabaseHelper;
@@ -115,7 +116,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
      */
     public void insertNewCourse(Course course) {
         // add course code and name to the list
-        mCourseCodeList.add(new String[]{course.getCourseCode(), course.getCourseName(), course.getEmailCr(), course.getEmailTa()});
+        mCourseCodeList.add(new String[]{course.getmCourseCode(), course.getmCourseName(), course.getmEmailCr(), course.getmEmailTa()});
 //        for (String member : mCourseCodeList){
 //            Log.i("Member name: ", member);
 //        }
@@ -260,6 +261,9 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
                 // set intent
                 contactUs();
                 return;
+            case R.id.request_backup:
+                mCurrentFragmentClass = BackupFragment.class;
+                break;
             default:
                 return;
         }

@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COURSE_COLUMN_COURSE_NAME = "courseName";
     public static final String COURSE_COLUMN_STUDENT_COUNT = "studentCount";
     public static final String COURSE_COLUMN_DAY_COUNT = "dayCount";
-    public static final String COURSE_COLUMN_CR_EMAIL = "emailCR";
+    public static final String COURSE_COLUMN_CR_EMAIL = "emailCr";
     public static final String COURSE_COLUMN_TA_EMAIL = "emailTa";
 
     public static final String STUDENT_COLUMN_COURSE_CODE = "courseCode";
@@ -91,15 +91,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void insertCourse(Course course) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("courseCode", course.getCourseCode());
-        contentValues.put("courseName", course.getCourseName());
-        contentValues.put("studentCount", course.getStudentCount());
-        contentValues.put("dayCount", course.getDayCount());
-        contentValues.put("emailCr", course.getEmailCr());
-        contentValues.put("emailTa", course.getEmailTa());
+        contentValues.put("courseCode", course.getmCourseCode());
+        contentValues.put("courseName", course.getmCourseName());
+        contentValues.put("studentCount", course.getmStudentCount());
+        contentValues.put("dayCount", course.getmDayCount());
+        contentValues.put("emailCr", course.getmEmailCr());
+        contentValues.put("emailTa", course.getmEmailTa());
         db.insert("courses", null, contentValues);
 
-        insertStudentForCourse(course.getCourseCode(), course.getStudentCount());
+        insertStudentForCourse(course.getmCourseCode(), course.getmStudentCount());
     }
 
 
@@ -332,5 +332,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //            } while (c.moveToNext());
 //        }
 //        c.close();
+    }
+
+
+    /**
+     * Get the course table columns
+     * @return Cursor for the above
+     */
+    public Cursor getCourses() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("select courseCode,courseName,studentCount,emailCr,emailTa,dayCount  from courses", null);
     }
 }
