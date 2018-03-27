@@ -58,7 +58,7 @@ public class ViewAttendanceFragment extends Fragment{
         // get calendar instance
         final Calendar myCalendar = Calendar.getInstance();
 
-        // TODO: Keep the disalog persistent and make a call to backPressed of Parent when cancel is pressed
+        // TODO: Keep the dialog persistent and make a call to backPressed of Parent when cancel is pressed
         // set date picker dialog listener for selection of date
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
