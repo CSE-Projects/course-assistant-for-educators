@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 
 import com.example.omkar.android.fragments.AddAttendanceFragment;
 import com.example.omkar.android.fragments.AddNotificationFragment;
+import com.example.omkar.android.fragments.SearchByStudentIdFragment;
 import com.example.omkar.android.fragments.StudentDetailsFragment;
 import com.example.omkar.android.fragments.AddMarksFragment;
 import com.example.omkar.android.fragments.ViewAttendanceFragment;
@@ -145,6 +146,24 @@ public class CourseActivity extends AppCompatActivity implements CourseViewInter
                 transaction.add(R.id.fragContainer, studentDetailsFragment, "Student Details Fragment");
                 // add this fragment to stack
                 transaction.addToBackStack("Student Details Fragment");
+                transaction.commit();
+            }
+        });
+
+        // search for a specific student's details
+        Button searchByStudentId = findViewById(R.id.searchByStudentId);
+        searchByStudentId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a new fragment
+                SearchByStudentIdFragment searchByStudentIdFragment = new SearchByStudentIdFragment();
+                // get transaction manager
+                FragmentManager manager = getFragmentManager();
+                // start transaction
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.add(R.id.fragContainer, searchByStudentIdFragment, "Search By Student ID Fragment");
+                // add this fragment to stack
+                transaction.addToBackStack("Search By Student ID Fragment");
                 transaction.commit();
             }
         });

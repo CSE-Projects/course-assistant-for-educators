@@ -138,6 +138,15 @@
                         android:textColor="@color/orange"
                         style="?android:attr/borderlessButtonStyle" />
 
+                    <Button
+                        android:id="@+id/searchByStudentId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Search"
+                        android:textSize="16sp"
+                        android:textColor="@color/orange"
+                        style="?android:attr/borderlessButtonStyle" />
+
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
