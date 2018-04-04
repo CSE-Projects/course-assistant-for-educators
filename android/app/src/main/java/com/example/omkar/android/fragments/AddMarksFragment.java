@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -64,10 +65,12 @@ public class AddMarksFragment extends Fragment{
             EditText insemEditText = new EditText(getActivity());
             insemEditText.setTag("insem" + i);
             insemEditText.setWidth(16);
+            insemEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             // edit text for endsem marks
             EditText endsemEditText = new EditText(getActivity());
             endsemEditText.setTag("endsem" + i);
             endsemEditText.setWidth(16);
+            endsemEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             // id
             TextView idText = new TextView(getActivity());
             idText.setText(String.valueOf(i+1));
@@ -106,7 +109,7 @@ public class AddMarksFragment extends Fragment{
         // get student count
         mDatabaseHelper = DatabaseHelper.getInstance(getActivity());
         mStudentCount = mDatabaseHelper.getStudentCount(mCourseCode);
-//        Log.d("DB STUDNET COUNT", String.valueOf(mDatabaseHelper.getStudentCount(courseInfo.getString("courseCode"))));
+//        Log.d("DB STUDENT COUNT", String.valueOf(mDatabaseHelper.getStudentCount(courseInfo.getString("courseCode"))));
 
         // fill student list
         for (int i = 0; i < mStudentCount; ++i) {
@@ -128,6 +131,10 @@ public class AddMarksFragment extends Fragment{
             // get marks fields
             EditText insemEditText = view.findViewWithTag("insem"+i);
             EditText endsemEditText = view.findViewWithTag("endsem"+i);
+            if(insemEditText.getText().toString().equals("") || endsemEditText.getText().toString().equals("")) {
+                Toast.makeText(getActivity(), "Please enter all fields", Toast.LENGTH_SHORT).show();
+                return;
+            }
             // add to list
             mStudentMarksList.get(i).setInsem(Float.valueOf(insemEditText.getText().toString()));
             mStudentMarksList.get(i).setEndsem(Float.valueOf(endsemEditText.getText().toString()));
@@ -136,6 +143,7 @@ public class AddMarksFragment extends Fragment{
         // save in database
         mDatabaseHelper.addMarks(mCourseCode, mStudentMarksList);
         Toast.makeText(getActivity(), "Saved!", Toast.LENGTH_SHORT).show();
+        getActivity().onBackPressed();
     }
 
 
@@ -164,7 +172,6 @@ public class AddMarksFragment extends Fragment{
                 return true;
             case R.id.save:
                 saveMarks();
-                getActivity().onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
