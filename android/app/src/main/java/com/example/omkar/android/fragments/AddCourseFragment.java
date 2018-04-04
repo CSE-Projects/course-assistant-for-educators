@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.omkar.android.CoursesActivity;
 import com.example.omkar.android.R;
@@ -66,12 +67,17 @@ public class AddCourseFragment extends Fragment {
         mEmailCrEditText = view.findViewById(R.id.emailCrEdit);
         mEmailTaEditText = view.findViewById(R.id.emailTaEdit);
 
-        // TODO: Add validation code for inputs
-
-        // create Course object
-        mCourse = new Course(mCourseNameEditText.getText().toString(), mCourseCodeEditText.getText().toString(), Integer.parseInt(mStudentCountEditText.getText().toString()), mEmailCrEditText.getText().toString(), mEmailTaEditText.getText().toString());
-        // save object in Courses Activity
-        ((CoursesActivity)getActivity()).insertNewCourse(mCourse);
+        if (mCourseNameEditText.getText().toString().equals("") || mStudentCountEditText.getText().toString().equals("") || mCourseCodeEditText.getText().toString().equals("") || mEmailCrEditText.getText().toString().equals("") || mEmailTaEditText.getText().toString().equals("")) {
+            Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            // create Course object
+            mCourse = new Course(mCourseNameEditText.getText().toString(), mCourseCodeEditText.getText().toString(), Integer.parseInt(mStudentCountEditText.getText().toString()), mEmailCrEditText.getText().toString(), mEmailTaEditText.getText().toString());
+            // save object in Courses Activity
+            ((CoursesActivity)getActivity()).insertNewCourse(mCourse);
+            // return back
+            getActivity().onBackPressed();
+        }
     }
 
 
@@ -101,8 +107,6 @@ public class AddCourseFragment extends Fragment {
             case R.id.save:
                 // save course
                 saveCourse();
-                // return back
-                getActivity().onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
