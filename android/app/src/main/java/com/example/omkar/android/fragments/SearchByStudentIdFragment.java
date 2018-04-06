@@ -78,7 +78,7 @@ public class SearchByStudentIdFragment extends Fragment{
             Log.d("DATE COUNT", String.valueOf(dateCount));
             Log.d("DAY COUNT", String.valueOf(dayCount));
             // add info
-            mStudentDetailsList.add(new String[]{String.valueOf(i + 1), String.valueOf(c.getInt(1)), String.valueOf(c.getInt(2)), dayCount != 0?String.valueOf((float)((dateCount * 100) / dayCount)):"0"});
+            mStudentDetailsList.add(new String[]{String.valueOf(i + 1), String.valueOf(c.getFloat(1)), String.valueOf(c.getFloat(2)), dayCount != 0?String.valueOf((float)((dateCount * 100) / dayCount)):"0"});
             if(!c.moveToNext()){break;}
         }
         c.close();

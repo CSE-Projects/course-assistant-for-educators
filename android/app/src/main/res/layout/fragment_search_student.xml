@@ -13,6 +13,7 @@
         <EditText
             android:id="@+id/searchForId"
             android:layout_width="80dp"
+            android:inputType="number"
             android:layout_height="wrap_content" />
 
         <Button
