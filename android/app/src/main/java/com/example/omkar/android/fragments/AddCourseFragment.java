@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -71,12 +72,17 @@ public class AddCourseFragment extends Fragment {
             Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
         }
         else {
-            // create Course object
-            mCourse = new Course(mCourseNameEditText.getText().toString(), mCourseCodeEditText.getText().toString(), Integer.parseInt(mStudentCountEditText.getText().toString()), mEmailCrEditText.getText().toString(), mEmailTaEditText.getText().toString());
-            // save object in Courses Activity
-            ((CoursesActivity)getActivity()).insertNewCourse(mCourse);
-            // return back
-            getActivity().onBackPressed();
+            if (Patterns.EMAIL_ADDRESS.matcher(mEmailCrEditText.getText()).matches() && Patterns.EMAIL_ADDRESS.matcher(mEmailTaEditText.getText()).matches()) {
+                // create Course object
+                mCourse = new Course(mCourseNameEditText.getText().toString(), mCourseCodeEditText.getText().toString(), Integer.parseInt(mStudentCountEditText.getText().toString()), mEmailCrEditText.getText().toString(), mEmailTaEditText.getText().toString());
+                // save object in Courses Activity
+                ((CoursesActivity)getActivity()).insertNewCourse(mCourse);
+                // return back
+                getActivity().onBackPressed();
+            }
+            else {
+                Toast.makeText(getActivity(), "Please fill a valid email address", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
