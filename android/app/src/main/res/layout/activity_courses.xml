@@ -33,19 +33,13 @@
             <!--android:layout_height="match_parent"-->
             <!--android:layout_marginTop="56dp">-->
 
-            <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/my_recycler_view"-->
-            <!--android:scrollbars="vertical"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"/>-->
-            <ListView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/courses_list_view"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
                 android:divider="@android:color/transparent"
                 android:layout_marginTop="64dp"
-                >
-            </ListView>
+                android:scrollbars="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
         <!--</android.support.v4.widget.NestedScrollView>-->
 
