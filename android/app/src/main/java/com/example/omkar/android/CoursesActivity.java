@@ -12,6 +12,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +24,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.omkar.android.adapters.CoursesAdapter;
+import com.example.omkar.android.adapters.RVCoursesAdapter;
 import com.example.omkar.android.fragments.AddCourseFragment;
 import com.example.omkar.android.fragments.BackupFragment;
 import com.example.omkar.android.fragments.DocumentSimilarityFragment;
@@ -38,11 +41,11 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
     private FloatingActionButton mAddCourseFab;
     private Class mCurrentFragmentClass;
     private DatabaseHelper mDbHelper;
-//    private RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager layoutManager;
 
     private ArrayList<String[]> mCourseCodeList;
-    private CoursesAdapter mCoursesAdapter;
-    private ListView mListView;
+    private RVCoursesAdapter mRVCoursesAdapter;
 
     private static final String EMAIL_BODY = "\n\nSent from: Course Assistant";
 
@@ -85,28 +88,20 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
         }
         c.close();
 
-        // set custom adapter and add to list view
-        mCoursesAdapter = new CoursesAdapter(this, mCourseCodeList);
-        mListView = findViewById(R.id.courses_list_view);
-        mListView.setAdapter(mCoursesAdapter);
 
-        // listener for click events on list view
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // set intent to Course Activity
-                Intent courseIntent = new Intent(CoursesActivity.this, CourseActivity.class);
-                // get course code of item clicked
-                String[] courseInfo = mCourseCodeList.get(position);
+        mRecyclerView = findViewById(R.id.courses_list_view);
 
-                // send course with intent
-                courseIntent.putExtra("courseCode", courseInfo[0]);
-                courseIntent.putExtra("courseName", courseInfo[1]);
-                courseIntent.putExtra("emailCr", courseInfo[2]);
-                courseIntent.putExtra("emailTa", courseInfo[3]);
-                startActivity(courseIntent);
-            }
-        });
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setNestedScrollingEnabled(false);
+
+        // set vertical layout manager ro recycler view
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        // set custom adapter and add to recycler view
+        mRVCoursesAdapter = new RVCoursesAdapter(mCourseCodeList, getApplicationContext());
+        mRecyclerView.setAdapter(mRVCoursesAdapter);
+
     }
 
 
@@ -120,8 +115,6 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
 //        for (String member : mCourseCodeList){
 //            Log.i("Member name: ", member);
 //        }
-        // notify adapter that list has changed
-        mCoursesAdapter.notifyDataSetChanged();
         // insert course in database
         mDbHelper.insertCourse(course);
 
@@ -345,7 +338,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
      */
     @Override
     public void setViewHidden(boolean enabled, int color) {
-        ListView l = findViewById(R.id.courses_list_view);
+        RecyclerView l = findViewById(R.id.courses_list_view);
         mDrawerLayout.setBackgroundColor(getResources().getColor(color));
         if (enabled) {
             l.setVisibility(View.GONE);
