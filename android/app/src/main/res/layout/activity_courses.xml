@@ -18,34 +18,32 @@
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"
-                app:titleTextColor="@android:color/white"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:titleTextColor="@android:color/white" />
         </android.support.design.widget.AppBarLayout>
 
         <!-- TODO: Change list view to recycler view -->
         <!--<android.support.v4.widget.NestedScrollView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginTop="56dp">-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginTop="56dp">-->
 
-            <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/my_recycler_view"-->
-            <!--android:scrollbars="vertical"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"/>-->
-            <ListView
-                android:id="@+id/courses_list_view"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:divider="@android:color/transparent"
-                android:layout_marginTop="64dp"
-                >
-            </ListView>
+        <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/my_recycler_view"-->
+        <!--android:scrollbars="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/courses_recycler_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="64dp"/>
 
         <!--</android.support.v4.widget.NestedScrollView>-->
 
@@ -58,19 +56,18 @@
             android:layout_margin="16dp"
             android:clickable="true"
             android:focusable="true"
-            app:backgroundTint="@color/colorPrimary"
-            app:rippleColor="@color/cardview_light_background"
+            android:src="@drawable/ic_add"
             android:tint="@android:color/white"
-            android:src="@drawable/ic_add" />
+            app:backgroundTint="@color/colorPrimary"
+            app:rippleColor="@color/cardview_light_background" />
     </FrameLayout>
 
 
     <!-- Fragment -->
     <FrameLayout
+        android:id="@+id/fragContainer"
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:id="@+id/fragContainer">
-    </FrameLayout>
+        android:layout_height="0dp"></FrameLayout>
 
 
     <!--Drawer part-->
@@ -80,8 +77,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/drawer_view"
-        app:headerLayout="@layout/nav_header" />
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/drawer_view" />
     <!--drawer_view has the contents and nav_header has the header-->
 
 </android.support.v4.widget.DrawerLayout>
