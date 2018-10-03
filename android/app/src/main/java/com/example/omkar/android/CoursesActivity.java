@@ -38,11 +38,11 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
     private FloatingActionButton mAddCourseFab;
     private Class mCurrentFragmentClass;
     private DatabaseHelper mDbHelper;
-//    private RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager layoutManager;
 
     private ArrayList<String[]> mCourseCodeList;
-    private CoursesAdapter mCoursesAdapter;
-    private ListView mListView;
+    private RVCoursesAdapter mRVCoursesAdapter;
 
     private static final String EMAIL_BODY = "\n\nSent from: Course Assistant";
 
