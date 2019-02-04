@@ -1,6 +1,7 @@
 /android/*.iml
 /android/.gradle
 /android/local.properties
+/android/.idea/
 /android/.idea/workspace.xml
 /android/.idea/modules.xml
 /android/.idea/libraries
