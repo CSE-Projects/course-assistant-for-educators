@@ -20,6 +20,7 @@ before_script:
   - set +o pipefail
   - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
   - set -o pipefail
+  - cd android
 
 stages:
   - build
@@ -29,7 +30,7 @@ build_release:
   only:
     - master
   script:
-    - ./android/gradlew assembleRelease
+    - ./gradlew assembleRelease
   artifacts:
     paths:
-      - ./android/app/build/outputs/
+      - app/build/outputs/
