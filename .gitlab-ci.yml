@@ -24,7 +24,12 @@ before_script:
 stages:
   - build
 
-gradleBuild:
+build_release:
   stage: build
+  only:
+    - master
   script:
-    - ./android/gradlew build
+    - ./android/gradlew assembleRelease
+  artifacts:
+    paths:
+      - ./android/app/build/outputs/
