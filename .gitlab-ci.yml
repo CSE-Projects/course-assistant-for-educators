@@ -33,4 +33,4 @@ build_release:
     - ./gradlew assembleRelease
   artifacts:
     paths:
-      - ./app/build/outputs/
+      - android/app/build/outputs/
