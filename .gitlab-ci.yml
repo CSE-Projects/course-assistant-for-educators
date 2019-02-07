@@ -26,12 +26,11 @@ stages:
   - package
 
 build_release:
-  before_script: 
-    - cd android
   stage: build
   only:
     - master
   script:
+    - cd android
     - ./gradlew assembleRelease
   artifacts:
     expire_in: 4 hours
