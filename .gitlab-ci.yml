@@ -20,17 +20,37 @@ before_script:
   - set +o pipefail
   - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
   - set -o pipefail
-  - cd android
 
 stages:
   - build
+  - package
 
 build_release:
+  before_script: 
+    - cd android
   stage: build
   only:
     - master
   script:
     - ./gradlew assembleRelease
   artifacts:
+    expire_in: 4 hours
     paths:
       - android/app/build/outputs/
+
+package_release:
+  before_script:
+    - export VERSION_NAME=`egrep '^[[:blank:]]+versionName[[:blank:]]'  app/build.gradle | awk '{print $2}' | sed s/\"//g`
+    - mkdir -p exported
+  stage: package
+  environment: Release
+  only:
+    - master
+  script:
+    - mv android/app/build/outputs/apk/release/app-release-unsigned.apk ./exported/${APP_NAME}-v$VERSION_NAME-release-unsigned.apk
+  dependencies:
+      - build_release
+  artifacts:
+    expire_in: 1 month
+    paths:
+      - exported
