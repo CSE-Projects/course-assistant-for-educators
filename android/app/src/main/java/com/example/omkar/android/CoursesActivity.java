@@ -19,8 +19,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.omkar.android.adapters.CoursesAdapter;
@@ -357,7 +355,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
      */
     @Override
     public void setViewHidden(boolean enabled, int color) {
-        ListView l = findViewById(R.id.courses_recycler_view);
+        RecyclerView l = findViewById(R.id.courses_recycler_view);
         mDrawerLayout.setBackgroundColor(getResources().getColor(color));
         if (enabled) {
             l.setVisibility(View.GONE);

@@ -16,5 +16,3 @@ Android application providing assistance for educators with features like
 * android-screenshots - Screenshots of the android application
 * reports - reports for the builds and testing
 * diagrams - UML and other diagrams for the application
-
-#### Current build can be installed from [here](https://drive.google.com/file/d/1WpFOWBVU6jIQaWPRtpOarxTBlWEDHCVi/view?usp=sharing)

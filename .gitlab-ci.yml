@@ -4,6 +4,7 @@ variables:
   ANDROID_COMPILE_SDK: "26"
   ANDROID_BUILD_TOOLS: "27.0.3"
   ANDROID_SDK_TOOLS:   "4333796"
+  APP_NAME: "cafr"
 
 before_script:
   - apt-get --quiet update --yes
@@ -20,6 +21,11 @@ before_script:
   - set +o pipefail
   - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
   - set -o pipefail
+  - echo $RELEASE_KEYSTORE_BASE64 | base64 --decode > android/app/keystore.jks
+  - echo "storeFile=keystore.jks" > android/keystore.properties
+  - echo "storePassword=$RELEASE_STORE_PASSWORD" >> keystore.properties
+  - echo "keyAlias=$RELEASE_KEY_ALIAS" >> keystore.properties
+  - echo "keyPassword=$RELEASE_KEY_PASSWORD" >> keystore.properties
 
 stages:
   - build
@@ -39,14 +45,14 @@ build_release:
 
 package_release:
   before_script:
-    - export VERSION_NAME=`egrep '^[[:blank:]]+versionName[[:blank:]]'  app/build.gradle | awk '{print $2}' | sed s/\"//g`
+    - export VERSION_NAME=`egrep '^[[:blank:]]+versionName[[:blank:]]'  android/app/build.gradle | awk '{print $2}' | sed s/\"//g`
     - mkdir -p exported
   stage: package
   environment: Release
   only:
     - master
   script:
-    - mv android/app/build/outputs/apk/release/app-release-unsigned.apk ./exported/${APP_NAME}-v$VERSION_NAME-release-unsigned.apk
+    - mv android/app/build/outputs/apk/release/app-release.apk ./exported/${APP_NAME}-v$VERSION_NAME-release.apk
   dependencies:
       - build_release
   artifacts:
