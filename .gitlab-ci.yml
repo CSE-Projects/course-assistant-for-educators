@@ -4,7 +4,7 @@ variables:
   ANDROID_COMPILE_SDK: "26"
   ANDROID_BUILD_TOOLS: "27.0.3"
   ANDROID_SDK_TOOLS:   "4333796"
-  APP_NAME: "cafr"
+  APP_NAME: "cafe"
 
 before_script:
   - apt-get --quiet update --yes
@@ -45,6 +45,7 @@ build_release:
 
 package_release:
   before_script:
+    - apksigner verify android/app/build/outputs/apk/release/app-release.apk
     - export VERSION_NAME=`egrep '^[[:blank:]]+versionName[[:blank:]]'  android/app/build.gradle | awk '{print $2}' | sed s/\"//g`
     - mkdir -p exported
   stage: package
