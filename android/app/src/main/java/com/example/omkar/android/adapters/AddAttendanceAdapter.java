@@ -1,65 +1,67 @@
 package com.example.omkar.android.adapters;
 
-import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.omkar.android.R;
 import com.example.omkar.android.fragments.AddAttendanceFragment;
+import com.example.omkar.android.fragments.AddAttendanceFragment.StudentAttendance;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by omkar on 15-Mar-18.
  */
 
-public class AddAttendanceAdapter extends ArrayAdapter<AddAttendanceFragment.StudentAttendance> {
+public class AddAttendanceAdapter extends RecyclerView.Adapter<AddAttendanceAdapter.StudentAttendanceViewHolder> {
 
-    /** Holds child views for one row. */
-    private static class StudentAttendanceViewHolder {
+    private List<StudentAttendance> studentAttendancelist;
+
+    public AddAttendanceAdapter(List<StudentAttendance> studentAttendancelist) {
+        this.studentAttendancelist = studentAttendancelist;
+    }
+
+    @Override
+    public StudentAttendanceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_attendance, parent, false);
+        return new StudentAttendanceViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(StudentAttendanceViewHolder holder, int position) {
+        // getting item from array list
+        AddAttendanceFragment.StudentAttendance studentAttendance = studentAttendancelist.get(position);
+
+        // set attributes
+        holder.textView.setText(String.valueOf(studentAttendance.getId()));
+        holder.checkBox.setChecked(studentAttendance.isChecked());
+        holder.checkBox.setTag(studentAttendance);
+    }
+
+    @Override
+    public int getItemCount() {
+        return studentAttendancelist.size();
+    }
+
+    /**
+     * Holds child views for one row.
+     */
+    static class StudentAttendanceViewHolder extends RecyclerView.ViewHolder {
         private CheckBox checkBox;
         private TextView textView;
-    }
 
-    public AddAttendanceAdapter(Activity context, ArrayList<AddAttendanceFragment.StudentAttendance> studentAttendancesList) {
-        super(context, 0, studentAttendancesList);
-    }
-
-
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-
-        // get view obj
-        View view = convertView;
-        // holder for the view
-        StudentAttendanceViewHolder holder = null;
-
-        // view doesn't exist
-        if (view == null) {
-            // inflate (create an object) a item from item_course and store in view
-            view = LayoutInflater.from(getContext()).inflate(R.layout.item_add_attendance, parent, false);
-
-            // create new holder for the view
-            holder = new StudentAttendanceViewHolder();
-
-            // holder view elements
-            holder.checkBox = view.findViewById(R.id.check);
-            holder.textView = view.findViewById(R.id.studentIdText);
-            // tag view with the holder
-            view.setTag(holder);
+        StudentAttendanceViewHolder(View itemView) {
+            super(itemView);
+            checkBox = itemView.findViewById(R.id.check);
+            textView = itemView.findViewById(R.id.studentIdText);
 
             // If CheckBox is toggled, update the studentAttendance obj it is tagged with.
-            holder.checkBox.setOnClickListener(new View.OnClickListener()
-            {
-                public void onClick(View v)
-                {   // get the checkbox
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {   // get the checkbox
                     CheckBox cb = (CheckBox) v;
                     // get the student Attendance obj associated with that checkbox
                     AddAttendanceFragment.StudentAttendance studentAttendance = (AddAttendanceFragment.StudentAttendance) cb.getTag();
@@ -68,21 +70,6 @@ public class AddAttendanceAdapter extends ArrayAdapter<AddAttendanceFragment.Stu
                 }
             });
         }
-        // view exists
-        else {
-            // get holder from the view through the tag
-            holder = (StudentAttendanceViewHolder) view.getTag();
-        }
-
-        // getting item from array list
-        AddAttendanceFragment.StudentAttendance studentAttendance = getItem(position);
-
-        // set attributes
-        holder.textView.setText(String.valueOf(studentAttendance.getId()));
-        holder.checkBox.setChecked(studentAttendance.isChecked());
-        holder.checkBox.setTag(studentAttendance);
-
-        // return item
-        return view;
     }
+
 }

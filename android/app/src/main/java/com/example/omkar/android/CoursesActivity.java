@@ -12,6 +12,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -42,7 +44,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
 
     private ArrayList<String[]> mCourseCodeList;
     private CoursesAdapter mCoursesAdapter;
-    private ListView mListView;
+    private RecyclerView mRecyclerView;
 
     private static final String EMAIL_BODY = "\n\nSent from: Course Assistant";
 
@@ -77,41 +79,46 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
         Cursor c = mDbHelper.getCourseInfo();
 
         // iterate through column elements
-        if (c.moveToFirst()){
+        if (c.moveToFirst()) {
             do {
                 // add to list
                 mCourseCodeList.add(new String[]{c.getString(0), c.getString(1), c.getString(2), c.getString(3)});
-            } while(c.moveToNext());
+            } while (c.moveToNext());
         }
         c.close();
 
-        // set custom adapter and add to list view
+        // set custom adapter and add to recycler view
         mCoursesAdapter = new CoursesAdapter(this, mCourseCodeList);
-        mListView = findViewById(R.id.courses_list_view);
-        mListView.setAdapter(mCoursesAdapter);
+        mRecyclerView = findViewById(R.id.courses_recycler_view);
+        mRecyclerView.setAdapter(mCoursesAdapter);
 
-        // listener for click events on list view
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // set intent to Course Activity
-                Intent courseIntent = new Intent(CoursesActivity.this, CourseActivity.class);
-                // get course code of item clicked
-                String[] courseInfo = mCourseCodeList.get(position);
+        // set the layout manager to the recycler view
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false));
 
-                // send course with intent
-                courseIntent.putExtra("courseCode", courseInfo[0]);
-                courseIntent.putExtra("courseName", courseInfo[1]);
-                courseIntent.putExtra("emailCr", courseInfo[2]);
-                courseIntent.putExtra("emailTa", courseInfo[3]);
-                startActivity(courseIntent);
-            }
-        });
+//        // listener for click events on list view
+//        mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                // set intent to Course Activity
+//                Intent courseIntent = new Intent(CoursesActivity.this, CourseActivity.class);
+//                // get course code of item clicked
+//                String[] courseInfo = mCourseCodeList.get(position);
+//
+//                // send course with intent
+//                courseIntent.putExtra("courseCode", courseInfo[0]);
+//                courseIntent.putExtra("courseName", courseInfo[1]);
+//                courseIntent.putExtra("emailCr", courseInfo[2]);
+//                courseIntent.putExtra("emailTa", courseInfo[3]);
+//                startActivity(courseIntent);
+//            }
+//        });
     }
 
 
     /**
      * Insert new course into database and list
+     *
      * @param course passed from fragment
      */
     public void insertNewCourse(Course course) {
@@ -131,6 +138,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
 
     /**
      * Toolbar Item selection Handler
+     *
      * @param item in toolbar
      * @return true: to hold and exit, false: to fall through
      */
@@ -189,7 +197,8 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
 
     /**
      * Configure Toolbar params
-     * @param title for toolbar
+     *
+     * @param title   for toolbar
      * @param ic_home icon to be displayed for home
      */
     public void initToolbar(String title, int ic_home) {
@@ -227,6 +236,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
 
     /**
      * Handler for nav drawer selection
+     *
      * @param menuItem item clicked in nav drawer
      */
     public void selectDrawerItem(MenuItem menuItem) {
@@ -237,7 +247,7 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
         Fragment fragment = null;
 
         // select
-        switch(menuItem.getItemId()) {
+        switch (menuItem.getItemId()) {
             case R.id.home:
                 // On selection, highlight it and quit the drawer
                 menuItem.setChecked(true);
@@ -308,15 +318,16 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
 
     /**
      * Lock Side Nav
+     *
      * @param enabled true: lock, false: unlock
      */
     @Override
-    public void setDrawerLocked(boolean enabled){
+    public void setDrawerLocked(boolean enabled) {
         // check if Drawer exists
         if (mDrawerLayout != null) {
-            if(enabled){
+            if (enabled) {
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            }else{
+            } else {
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
         }
@@ -325,14 +336,14 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
 
     /**
      * Hide and show Add Course FAB
+     *
      * @param enable true: hide, false: show
      */
     @Override
-    public void setFabHidden(boolean enable){
+    public void setFabHidden(boolean enable) {
         if (enable) {
             mAddCourseFab.hide();
-        }
-        else {
+        } else {
             mAddCourseFab.show();
         }
     }
@@ -340,17 +351,17 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
 
     /**
      * Hide view of Courses Activity and set background color
+     *
      * @param enabled true: hide, false: show
-     * @param color set background color
+     * @param color   set background color
      */
     @Override
     public void setViewHidden(boolean enabled, int color) {
-        ListView l = findViewById(R.id.courses_list_view);
+        ListView l = findViewById(R.id.courses_recycler_view);
         mDrawerLayout.setBackgroundColor(getResources().getColor(color));
         if (enabled) {
             l.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             l.setVisibility(View.VISIBLE);
         }
     }
@@ -359,10 +370,10 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
     /**
      * Remove all fragments from back stack
      */
-    private void removeAllFragments () {
+    private void removeAllFragments() {
         // remove all fragments
         FragmentManager fragmentManager = getFragmentManager();
-        for(int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
+        for (int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) {
             fragmentManager.popBackStack();
         }
     }
@@ -385,12 +396,10 @@ public class CoursesActivity extends AppCompatActivity implements CoursesViewInt
             NavigationView navigation = findViewById(R.id.nav_view);
             Menu drawer_menu = navigation.getMenu();
             MenuItem menuItem = drawer_menu.findItem(R.id.home);
-            if(!menuItem.isChecked())
-            {
+            if (!menuItem.isChecked()) {
                 menuItem.setChecked(true);
             }
-        }
-        else {
+        } else {
             Log.d("Check back", "SUPER");
             super.onBackPressed();
         }

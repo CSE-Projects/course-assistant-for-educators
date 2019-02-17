@@ -52,11 +52,11 @@
             android:text="%"/>
     </LinearLayout>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/list_student_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

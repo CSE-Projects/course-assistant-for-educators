@@ -5,13 +5,15 @@ import android.app.Fragment;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
-import android.widget.ListView;
 
 import com.example.omkar.android.CourseActivity;
 import com.example.omkar.android.R;
@@ -25,7 +27,7 @@ import java.util.Calendar;
  * Created by omkar on 20-Mar-18.
  */
 
-public class ViewAttendanceFragment extends Fragment{
+public class ViewAttendanceFragment extends Fragment {
 
     // view of fragment
     View view;
@@ -39,14 +41,14 @@ public class ViewAttendanceFragment extends Fragment{
         super.onCreate(savedInstanceState);
         // configure Toolbar in Course Activity
         setHasOptionsMenu(true);
-        ((CourseActivity)getActivity()).initToolbar("Attendance");
-        ((CourseActivity)getActivity()).setViewHidden(true, R.color.white);
+        ((CourseActivity) getActivity()).initToolbar("Attendance");
+        ((CourseActivity) getActivity()).setViewHidden(true, R.color.white);
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view =  inflater.inflate(R.layout.fragment_view_attendance, container, false);
+        view = inflater.inflate(R.layout.fragment_view_attendance, container, false);
         return view;
     }
 
@@ -72,11 +74,11 @@ public class ViewAttendanceFragment extends Fragment{
                 Log.d("DATE PICKER", String.valueOf(dayOfMonth));
 
                 String month = "";
-                if(monthOfYear < 10) {
-                    month="0"+String.valueOf(monthOfYear + 1);
+                if (monthOfYear < 10) {
+                    month = "0" + String.valueOf(monthOfYear + 1);
                 }
 
-                displayAttendanceForTheDay(String.valueOf(dayOfMonth)+'/'+month+'/'+String.valueOf(year));
+                displayAttendanceForTheDay(String.valueOf(dayOfMonth) + '/' + month + '/' + String.valueOf(year));
             }
         };
 
@@ -89,6 +91,7 @@ public class ViewAttendanceFragment extends Fragment{
 
     /**
      * Display Attendance for the day
+     *
      * @param date date picked
      */
     private void displayAttendanceForTheDay(String date) {
@@ -123,21 +126,27 @@ public class ViewAttendanceFragment extends Fragment{
         for (int i = 0; i < studentCount; i++) {
             Log.d("ATTENDANCE DATES", c.getString(1));
             boolean isFound = c.getString(1).contains(date);
-            mAttendanceList.add(new String[]{String.valueOf(i+1), isFound? "P":"A"});
-            if(!c.moveToNext()){break;}
+            mAttendanceList.add(new String[]{String.valueOf(i + 1), isFound ? "P" : "A"});
+            if (!c.moveToNext()) {
+                break;
+            }
         }
         c.close();
 
-        // set adapter and init list view
+        // set adapter and init recycler view
         ViewAttendanceAdapter viewAttendanceAdapter = new ViewAttendanceAdapter(getActivity(), mAttendanceList);
-        ListView attendanceListView = view.findViewById(R.id.view_attendance_list);
-        attendanceListView.setAdapter(viewAttendanceAdapter);
+        RecyclerView attendanceRecyclerView = view.findViewById(R.id.view_attendance_list);
+        attendanceRecyclerView.setAdapter(viewAttendanceAdapter);
+        attendanceRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),
+                LinearLayoutManager.VERTICAL, false));
+        attendanceRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),
+                DividerItemDecoration.VERTICAL));
     }
-
 
 
     /**
      * Toolbar Item selection Handler
+     *
      * @param item in toolbar
      * @return true: to hold and exit, false: to fall through
      */
@@ -156,7 +165,7 @@ public class ViewAttendanceFragment extends Fragment{
     public void onDestroy() {
         super.onDestroy();
         // Reset Course Activity Toolbar
-        ((CourseActivity)getActivity()).initToolbar("TITLE");
-        ((CourseActivity)getActivity()).setViewHidden(false, R.color.background);
+        ((CourseActivity) getActivity()).initToolbar("TITLE");
+        ((CourseActivity) getActivity()).setViewHidden(false, R.color.background);
     }
 }

@@ -1,61 +1,88 @@
 package com.example.omkar.android.adapters;
 
-import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.omkar.android.CourseActivity;
 import com.example.omkar.android.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by omkar on 14-Mar-18.
  */
 
-public class CoursesAdapter extends ArrayAdapter<String[]> {
+public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.CoursesViewHolder> {
 
     // TODO: Add colors to course codes
 //    private int[] colors ;
 //    private int positionColors;
 
-    public CoursesAdapter(Activity context, ArrayList<String[]> courseCodeList) {
-        super(context, 0, courseCodeList);
+    private List<String[]> courseCodeList;
+    private Context mContext;
 
-//        colors = new int[] {R.color.brown, R.color.pink, R.color.blue, R.color.green, R.color.orange, R.color.purple};
-//        positionColors = 0;
+    public CoursesAdapter(Context context, List<String[]> courseCodeList) {
+        mContext = context;
+        this.courseCodeList = courseCodeList;
+//      colors = new int[] {R.color.brown, R.color.pink, R.color.blue, R.color.green, R.color.orange, R.color.purple};
+//      positionColors = 0;
     }
 
-    @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public CoursesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_course, parent, false);
+        return new CoursesViewHolder(view, mContext, courseCodeList);
+    }
 
-        View view = convertView;
-        if (view == null) {
-            // inflate (create an object) a item from item_course and store in view
-            view = LayoutInflater.from(getContext()).inflate(R.layout.item_course, parent, false);
-        }
-
+    @Override
+    public void onBindViewHolder(CoursesViewHolder holder, int position) {
         // getting item from array list
-        String[] courseInfo = getItem(position);
+        String[] courseInfo = courseCodeList.get(position);
 
-        // get view from item_course to display course code and name
-        TextView courseCodeText = view.findViewById(R.id.courseCodeText);
-        TextView courseNameText = view.findViewById(R.id.courseNameText);
         // set text of view
-        courseCodeText.setText(courseInfo[0]);
-        courseNameText.setText(courseInfo[1]);
+        holder.courseCodeText.setText(courseInfo[0]);
+        holder.courseNameText.setText(courseInfo[1]);
 
-//        courseCodeText.setTextColor(colors[(new Random().nextInt(1000)) % colors.length]);
+    }
 
-//        Log.i("Count check", String.valueOf(positionColors % colors.length));
-//        positionColors += 1;
+    @Override
+    public int getItemCount() {
+        return courseCodeList.size();
+    }
 
-        // return item
-        return view;
+    static class CoursesViewHolder extends RecyclerView.ViewHolder {
+
+        TextView courseCodeText;
+        TextView courseNameText;
+
+        CoursesViewHolder(View itemView, final Context context, final List<String[]> courseCodeList) {
+            super(itemView);
+            // get view from item_course to display course code and name
+            courseCodeText = itemView.findViewById(R.id.courseCodeText);
+            courseNameText = itemView.findViewById(R.id.courseNameText);
+
+            // set an OnClickListener on the list item
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // set intent to Course Activity
+                    Intent courseIntent = new Intent(context, CourseActivity.class);
+                    // get course code of item clicked
+                    String[] courseInfo = courseCodeList.get(getAdapterPosition());
+
+                    // send course with intent
+                    courseIntent.putExtra("courseCode", courseInfo[0]);
+                    courseIntent.putExtra("courseName", courseInfo[1]);
+                    courseIntent.putExtra("emailCr", courseInfo[2]);
+                    courseIntent.putExtra("emailTa", courseInfo[3]);
+                    context.startActivity(courseIntent);
+                }
+            });
+        }
     }
 }

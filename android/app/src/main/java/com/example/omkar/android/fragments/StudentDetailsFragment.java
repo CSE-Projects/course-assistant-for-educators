@@ -4,6 +4,9 @@ import android.app.Fragment;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.example.omkar.android.CourseActivity;
 import com.example.omkar.android.R;
@@ -26,7 +28,7 @@ import java.util.Comparator;
  * Created by omkar on 23-Mar-18.
  */
 
-public class StudentDetailsFragment extends Fragment{
+public class StudentDetailsFragment extends Fragment {
 
 
     // view of fragment
@@ -42,14 +44,14 @@ public class StudentDetailsFragment extends Fragment{
         super.onCreate(savedInstanceState);
         // configure Toolbar in Course Activity
         setHasOptionsMenu(true);
-        ((CourseActivity)getActivity()).initToolbar("Student Details");
-        ((CourseActivity)getActivity()).setViewHidden(true, R.color.white);
+        ((CourseActivity) getActivity()).initToolbar("Student Details");
+        ((CourseActivity) getActivity()).setViewHidden(true, R.color.white);
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view =  inflater.inflate(R.layout.fragment_student_details, container, false);
+        view = inflater.inflate(R.layout.fragment_student_details, container, false);
 
         mStudentDetailsList = new ArrayList<>();
         // get course code
@@ -79,12 +81,15 @@ public class StudentDetailsFragment extends Fragment{
         for (int i = 0; i < studentCount; i++) {
             // no of days attended
             String dates = c.getString(3);
-            int dateCount = dates.length() - dates.replace(",", "").length();;
+            int dateCount = dates.length() - dates.replace(",", "").length();
+            ;
             Log.d("DATE COUNT", String.valueOf(dateCount));
             Log.d("DAY COUNT", String.valueOf(dayCount));
             // add info
-            mStudentDetailsList.add(new String[]{String.valueOf(i + 1), String.valueOf(c.getFloat(1)), String.valueOf(c.getFloat(2)), dayCount != 0?String.valueOf((float)((dateCount * 100) / dayCount)):"0"});
-            if(!c.moveToNext()){break;}
+            mStudentDetailsList.add(new String[]{String.valueOf(i + 1), String.valueOf(c.getFloat(1)), String.valueOf(c.getFloat(2)), dayCount != 0 ? String.valueOf((float) ((dateCount * 100) / dayCount)) : "0"});
+            if (!c.moveToNext()) {
+                break;
+            }
         }
         c.close();
 
@@ -98,9 +103,12 @@ public class StudentDetailsFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
 
         mStudentDetailsAdapter = new StudentDetailsAdapter(getActivity(), mStudentDetailsList);
-        ListView studentDetailsList = view.findViewById(R.id.list_student_details);
+        RecyclerView studentDetailsList = view.findViewById(R.id.list_student_details);
         studentDetailsList.setAdapter(mStudentDetailsAdapter);
-
+        studentDetailsList.setLayoutManager(new LinearLayoutManager(getActivity(),
+                LinearLayoutManager.VERTICAL, false));
+        studentDetailsList.addItemDecoration(new DividerItemDecoration(getActivity(),
+                DividerItemDecoration.VERTICAL));
     }
 
 
@@ -134,7 +142,8 @@ public class StudentDetailsFragment extends Fragment{
 
     /**
      * Inflate menu items into views
-     * @param menu menu xml
+     *
+     * @param menu     menu xml
      * @param inflater inflater obj
      */
     @Override
@@ -146,6 +155,7 @@ public class StudentDetailsFragment extends Fragment{
 
     /**
      * Toolbar Item selection Handler
+     *
      * @param item in toolbar
      * @return true: to hold and exit, false: to fall through
      */
@@ -170,7 +180,7 @@ public class StudentDetailsFragment extends Fragment{
     public void onDestroy() {
         super.onDestroy();
         // Reset Course Activity Toolbar
-        ((CourseActivity)getActivity()).initToolbar("TITLE");
-        ((CourseActivity)getActivity()).setViewHidden(false, R.color.background);
+        ((CourseActivity) getActivity()).initToolbar("TITLE");
+        ((CourseActivity) getActivity()).setViewHidden(false, R.color.background);
     }
 }

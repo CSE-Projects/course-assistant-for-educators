@@ -1,63 +1,75 @@
 package com.example.omkar.android.adapters;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.omkar.android.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by omkar on 24-Mar-18.
  */
 
-public class StudentDetailsAdapter extends ArrayAdapter<String[]> {
+public class StudentDetailsAdapter extends RecyclerView.Adapter<StudentDetailsAdapter.StudentDetailsViewHolder> {
+    private List<String[]> studentDetailsList;
+    private Context context;
 
-    public StudentDetailsAdapter(Activity context, ArrayList<String[]> studentDetailsList) {
-        super(context, 0, studentDetailsList);
+    public StudentDetailsAdapter(Context context, ArrayList<String[]> studentDetailsList) {
+        this.context = context;
+        this.studentDetailsList = studentDetailsList;
     }
 
-
-    @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public StudentDetailsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_student_details, parent, false);
+        return new StudentDetailsViewHolder(view);
+    }
 
-        // get view obj
-        View view = convertView;
-
-        if (view == null) {
-            // inflate (create an object) a item from item_student_details and store in view
-            view = LayoutInflater.from(getContext()).inflate(R.layout.item_student_details, parent, false);
-        }
-
+    @Override
+    public void onBindViewHolder(StudentDetailsViewHolder holder, int position) {
         // get item
-        String[] studentDetails = getItem(position);
-
-        // get view elements
-        TextView studentId = view.findViewById(R.id.studentId);
-        TextView insem = view.findViewById(R.id.insem);
-        TextView endsem = view.findViewById(R.id.endsem);
-        TextView attendance = view.findViewById(R.id.attendance);
-
+        String[] studentDetails = studentDetailsList.get(position);
         // set view item values
         try {
-            studentId.setText(studentDetails[0]);
-            insem.setText(studentDetails[1]);
-            endsem.setText(studentDetails[2]);
-            attendance.setText(studentDetails[3]);
+            holder.studentId.setText(studentDetails[0]);
+            holder.insem.setText(studentDetails[1]);
+            holder.endsem.setText(studentDetails[2]);
+            holder.attendance.setText(studentDetails[3]);
+        } catch (Exception e) {
+            Toast.makeText(context, "No entry found", Toast.LENGTH_SHORT).show();
         }
-        catch (Exception e){
-            Toast.makeText(getContext(), "No entry found", Toast.LENGTH_SHORT).show();
-        }
+    }
 
-        // return item
-        return view;
+    @Override
+    public int getItemCount() {
+        return studentDetailsList.size();
+    }
+
+    static class StudentDetailsViewHolder extends RecyclerView.ViewHolder {
+
+        TextView studentId;
+        TextView insem;
+        TextView endsem;
+        TextView attendance;
+
+        public StudentDetailsViewHolder(View itemView) {
+            super(itemView);
+
+            // get view elements
+            studentId = itemView.findViewById(R.id.studentId);
+            insem = itemView.findViewById(R.id.insem);
+            endsem = itemView.findViewById(R.id.endsem);
+            attendance = itemView.findViewById(R.id.attendance);
+        }
     }
 }

@@ -3,13 +3,15 @@ package com.example.omkar.android.fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.omkar.android.CourseActivity;
@@ -26,7 +28,7 @@ import java.util.Locale;
  * Created by omkar on 15-Mar-18.
  */
 
-public class AddAttendanceFragment extends Fragment{
+public class AddAttendanceFragment extends Fragment {
 
     // view of fragment
     View view;
@@ -41,8 +43,8 @@ public class AddAttendanceFragment extends Fragment{
         super.onCreate(savedInstanceState);
         // configure Toolbar in Course Activity
         setHasOptionsMenu(true);
-        ((CourseActivity)getActivity()).initToolbar("Add Attendance");
-        ((CourseActivity)getActivity()).setViewHidden(true, R.color.white);
+        ((CourseActivity) getActivity()).initToolbar("Add Attendance");
+        ((CourseActivity) getActivity()).setViewHidden(true, R.color.white);
 
         fillStudentList();
     }
@@ -50,7 +52,7 @@ public class AddAttendanceFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view =  inflater.inflate(R.layout.fragment_add_attendance, container, false);
+        view = inflater.inflate(R.layout.fragment_add_attendance, container, false);
         return view;
     }
 
@@ -67,14 +69,18 @@ public class AddAttendanceFragment extends Fragment{
      * Initialize add attendance list view
      */
     private void initList() {
-        // context of activity
-        mAddAttendanceAdapter = new AddAttendanceAdapter(getActivity(), mStudentAttendanceList);
-        // set listener
-        ListView addAttendanceList = view.findViewById(R.id.add_attendance_list_view);
+        // Create an adapter
+        mAddAttendanceAdapter = new AddAttendanceAdapter(mStudentAttendanceList);
+        // Get a reference to the recycler view
+        RecyclerView addAttendanceList = view.findViewById(R.id.add_attendance_recycler_view);
+        // Set layout manager
+        addAttendanceList.setLayoutManager(new LinearLayoutManager(getActivity(),
+                LinearLayoutManager.VERTICAL, false));
+        // Set
+        addAttendanceList.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         // set adapter
         addAttendanceList.setAdapter(mAddAttendanceAdapter);
     }
-
 
     /**
      * Helper to fill student id list array from database
@@ -94,7 +100,7 @@ public class AddAttendanceFragment extends Fragment{
 //        Log.d("DB STUDNET COUNT", String.valueOf(mDatabaseHelper.getStudentCount(courseInfo.getString("courseCode"))));
 
         // fill student list
-        for (int i= 1; i <= studentCount; ++i) {
+        for (int i = 1; i <= studentCount; ++i) {
             mStudentAttendanceList.add(new StudentAttendance(String.valueOf(i), false));
         }
     }
@@ -116,7 +122,8 @@ public class AddAttendanceFragment extends Fragment{
 
     /**
      * Inflate menu items into views
-     * @param menu menu xml
+     *
+     * @param menu     menu xml
      * @param inflater inflater obj
      */
     @Override
@@ -128,6 +135,7 @@ public class AddAttendanceFragment extends Fragment{
 
     /**
      * Toolbar Item selection Handler
+     *
      * @param item in toolbar
      * @return true: to hold and exit, false: to fall through
      */
@@ -150,8 +158,8 @@ public class AddAttendanceFragment extends Fragment{
     public void onDestroy() {
         super.onDestroy();
         // Reset Course Activity Toolbar
-        ((CourseActivity)getActivity()).initToolbar("TITLE");
-        ((CourseActivity)getActivity()).setViewHidden(false, R.color.background);
+        ((CourseActivity) getActivity()).initToolbar("TITLE");
+        ((CourseActivity) getActivity()).setViewHidden(false, R.color.background);
     }
 
 
@@ -180,7 +188,6 @@ public class AddAttendanceFragment extends Fragment{
             this.checked = checked;
         }
     }
-
 
 
 }
