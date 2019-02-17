@@ -23,9 +23,9 @@ before_script:
   - set -o pipefail
   - echo $RELEASE_KEYSTORE_BASE64 | base64 --decode > android/app/keystore.jks
   - echo "storeFile=keystore.jks" > android/keystore.properties
-  - echo "storePassword=$RELEASE_STORE_PASSWORD" >> keystore.properties
-  - echo "keyAlias=$RELEASE_KEY_ALIAS" >> keystore.properties
-  - echo "keyPassword=$RELEASE_KEY_PASSWORD" >> keystore.properties
+  - echo "storePassword=$RELEASE_STORE_PASSWORD" >> android/keystore.properties
+  - echo "keyAlias=$RELEASE_KEY_ALIAS" >> android/keystore.properties
+  - echo "keyPassword=$RELEASE_KEY_PASSWORD" >> android/keystore.properties
 
 stages:
   - build
