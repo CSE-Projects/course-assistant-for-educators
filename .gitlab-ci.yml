@@ -22,10 +22,10 @@ before_script:
   - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
   - set -o pipefail
   - echo $RELEASE_KEYSTORE_BASE64 | base64 --decode > android/app/keystore.jks
-  - echo "storeFile=keystore.jks" > android/keystore.properties
-  - echo "storePassword=$RELEASE_STORE_PASSWORD" >> android/keystore.properties
-  - echo "keyAlias=$RELEASE_KEY_ALIAS" >> android/keystore.properties
-  - echo "keyPassword=$RELEASE_KEY_PASSWORD" >> android/keystore.properties
+  # - echo "storeFile=keystore.jks" > android/keystore.properties
+  # - echo "storePassword=$RELEASE_STORE_PASSWORD" >> android/keystore.properties
+  # - echo "keyAlias=$RELEASE_KEY_ALIAS" >> android/keystore.properties
+  # - echo "keyPassword=$RELEASE_KEY_PASSWORD" >> android/keystore.properties
 
 stages:
   - build
@@ -45,7 +45,6 @@ build_release:
 
 package_release:
   before_script:
-    - apksigner verify android/app/build/outputs/apk/release/app-release.apk
     - export VERSION_NAME=`egrep '^[[:blank:]]+versionName[[:blank:]]'  android/app/build.gradle | awk '{print $2}' | sed s/\"//g`
     - mkdir -p exported
   stage: package
