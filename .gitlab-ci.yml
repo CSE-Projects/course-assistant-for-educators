@@ -39,7 +39,7 @@ build_release:
     - cd android
     - ./gradlew assembleRelease
   artifacts:
-    expire_in: 4 hours
+    expire_in: 2 hours
     paths:
       - android/app/build/outputs/
 
@@ -56,6 +56,6 @@ package_release:
   dependencies:
       - build_release
   artifacts:
-    expire_in: 1 month
+    expire_in: 2 weeks
     paths:
       - exported

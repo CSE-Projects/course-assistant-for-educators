@@ -4,7 +4,7 @@ jdk: oraclejdk8
 env:
   global:
    - ANDROID_API_LEVEL=26
-   - ANDROID_BUILD_TOOLS_VERSION=28.0.2
+   - ANDROID_BUILD_TOOLS_VERSION=27.0.3
 
 android:
   components:
@@ -28,4 +28,4 @@ before_install:
   - chmod +x gradlew
 
 script:
-  - ./gradlew build  
+  - ./gradlew assembleDebug  
